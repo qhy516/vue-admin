@@ -1,3 +1,7 @@
 import * as api from './api';
+import loginApi from './login';
 
-export default api;
+export default {
+    api,
+    loginApi
+}
