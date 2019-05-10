@@ -39,7 +39,7 @@ export default {
   color: #333;
   /* text-align: center; */
   /* line-height: 200px; */
-  height: 680px;
+  height: 880px;
 }
 
 .el-main {
@@ -47,6 +47,6 @@ export default {
   color: #333;
   /* text-align: center; */
   /* line-height: 160px; */
-  height: 680px;
+  height: 880px;
 }
 </style>
