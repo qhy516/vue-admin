@@ -54,15 +54,32 @@ export default {
         }
       });
     },
+    save() {
+      let param = new URLSearchParams();
+      param.append("id", this.detail.id);
+      param.append("companyCode", this.detail.companyCode);
+      param.append("name", this.detail.name);
+      param.append("realName", this.detail.realName);
+      param.append("icardNum", this.detail.icardNum);
+      this.axios.post("/admin/user/modify", param).then(data => {
+        if (data.data.isSucc == false) {
+          this.$message({
+            message: data.data.message,
+            type: "error"
+          });
+        } else {
+          this.$message({
+            message: "操作成功",
+            type: "success"
+          });
+          this.cancle();
+        }
+      });
+    },
     closeDialog() {
-      this.visible = false;
-      this.callBack();
+      this.cancle();
     },
     cancle() {
-      this.visible = false;
-      this.callBack();
-    },
-    save() {
       this.visible = false;
       this.callBack();
     },

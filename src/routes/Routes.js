@@ -1,8 +1,10 @@
 import Login from '../views/Login.vue'
 import NotFound from '../views/404.vue'
 import Home from '../views/home/Home.vue'
+import Index from '../views/index/Index.vue';
 import UserList from '../views/user/UserList.vue'
 import WalletList from '../views/wallet/WalletList.vue'
+import WalletLogList from '../views/walletlog/WalletLogList.vue';
 import WalletAsset from '../views/wallet/WalletAsset.vue'
 
 
@@ -28,8 +30,11 @@ let routes = [{
     {
         path: '/home',
         component: Home,
-        name: "首页",
         children: [{
+                path: '/index',
+                component: Index,
+                name: '主页'
+            }, {
                 path: '/userlist',
                 component: UserList,
                 name: '用户列表'
@@ -38,6 +43,11 @@ let routes = [{
                 path: '/walletlist',
                 component: WalletList,
                 name: '钱包列表'
+            },
+            {
+                path: '/walletloglist',
+                component: WalletLogList,
+                name: '钱包日志列表'
             },
             {
                 path: '/walletasset',

@@ -138,7 +138,7 @@ export default {
                   "user",
                   JSON.stringify(data.data.result)
                 );
-                this.$router.push({ path: "/home" });
+                this.$router.push({ path: "/index" });
               }
             });
         } else {

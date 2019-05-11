@@ -9,6 +9,11 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
+            <el-form-item label="手机号：">
+              <el-input class="forminput" size="small" v-model="formInline.phone" placeholder="手机号"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
             <el-form-item label="用户姓名：">
               <el-input
                 class="forminput"
@@ -16,11 +21,6 @@
                 v-model="formInline.realName"
                 placeholder="用户真实姓名"
               ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="手机号：">
-              <el-input class="forminput" size="small" v-model="formInline.phone" placeholder="手机号"></el-input>
             </el-form-item>
           </el-col>
         </el-form>
@@ -34,7 +34,7 @@
     </el-card>
     <el-card>
       <el-table
-        v-loading="loading"
+        v-loading="this.loading"
         element-loading-text="拼命加载中"
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(230,230,250, 0.8)"
@@ -89,18 +89,22 @@
         @current-change="currentChange"
       ></el-pagination>
     </el-card>
-    <Detail
-      v-if="this.detail"
-      v-bind:visibleShow="this.detailShow"
-      v-bind:detailData="this.multipleSelection[0]"
-      v-on:childEvent="listenDetailChild"
-    ></Detail>
-    <Role
-      v-if="this.role"
-      v-bind:visibleShow="this.roleShow"
-      v-bind:name="this.multipleSelection[0].name"
-      v-on:childEvent="listenRoleChild"
-    ></Role>
+    <transition name="el-zoom-in-center">
+      <Detail
+        v-if="this.detail"
+        v-bind:visibleShow="this.detailShow"
+        v-bind:detailData="this.multipleSelection[0]"
+        v-on:childEvent="listenDetailChild"
+      ></Detail>
+    </transition>
+    <transition name="el-zoom-in-center">
+      <Role
+        v-if="this.role"
+        v-bind:visibleShow="this.roleShow"
+        v-bind:name="this.multipleSelection[0].name"
+        v-on:childEvent="listenRoleChild"
+      ></Role>
+    </transition>
   </div>
 </template>
 <script>
@@ -236,6 +240,7 @@ export default {
     },
     listenRoleChild(data) {
       this.role = false;
+      this.list();
     },
     rrole() {
       if (

@@ -25,82 +25,72 @@
         </el-form-item>
       </el-col>
     </el-form>
-    <el-row class="authRow">
-      <el-col :span="8">
-        登录权限：
-        <el-switch
-          v-model="userAuth.unLogin"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          active-icon-class="el-icon-error"
-          inactive-icon-class="el-icon-success"
-        ></el-switch>
-      </el-col>
-      <el-col :span="8">
-        买进权限：
-        <el-switch
-          v-model="userAuth.unBuy"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          active-icon-class="el-icon-error"
-          inactive-icon-class="el-icon-success"
-        ></el-switch>
-      </el-col>
-      <el-col :span="8">
-        卖出权限：
-        <el-switch
-          v-model="userAuth.unSell"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          active-icon-class="el-icon-error"
-          inactive-icon-class="el-icon-success"
-        ></el-switch>
-      </el-col>
-    </el-row>
-    <el-row class="authRow">
-      <el-col :span="8">
-        充值权限：
-        <el-switch
-          v-model="userAuth.unRecharge"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          active-icon-class="el-icon-error"
-          inactive-icon-class="el-icon-success"
-        ></el-switch>
-      </el-col>
-      <el-col :span="8">
-        提现权限：
-        <el-switch
-          v-model="userAuth.unWithdraw"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          active-icon-class="el-icon-error"
-          inactive-icon-class="el-icon-success"
-        ></el-switch>
-      </el-col>
-    </el-row>
-    <el-row class="authRow">
-      <el-col :span="8">
-        融券买权限：
-        <el-switch
-          v-model="userAuth.unBuyMargin"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          active-icon-class="el-icon-error"
-          inactive-icon-class="el-icon-success"
-        ></el-switch>
-      </el-col>
-      <el-col :span="8">
-        融券卖权限：
-        <el-switch
-          v-model="userAuth.unSellMargin"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          active-icon-class="el-icon-error"
-          inactive-icon-class="el-icon-success"
-        ></el-switch>
-      </el-col>
-    </el-row>
+    <el-form ref="form" :model="userAuth">
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="登录权限：">
+            <el-select v-model="userAuth.unLogin">
+              <el-option label="允许" :value="false"></el-option>
+              <el-option label="禁止" :value="true"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="买进权限：">
+            <el-select v-model="userAuth.unBuy">
+              <el-option label="允许" :value="false"></el-option>
+              <el-option label="禁止" :value="true"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="卖出权限：">
+            <el-select v-model="userAuth.unSell">
+              <el-option label="允许" :value="false"></el-option>
+              <el-option label="禁止" :value="true"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="充值权限：">
+            <el-select v-model="userAuth.unRecharge">
+              <el-option label="允许" :value="false"></el-option>
+              <el-option label="禁止" :value="true"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="提现权限：">
+            <el-select v-model="userAuth.unWithdraw">
+              <el-option label="允许" :value="false"></el-option>
+              <el-option label="禁止" :value="true"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="券买权限：">
+            <el-select v-model="userAuth.unBuyMargin">
+              <el-option label="允许" :value="false"></el-option>
+              <el-option label="禁止" :value="true"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="券卖权限：">
+            <el-select v-model="userAuth.unSellMargin">
+              <el-option label="允许" :value="false"></el-option>
+              <el-option label="禁止" :value="true"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="cancle">取 消</el-button>
       <el-button type="primary" @click="save">修改</el-button>

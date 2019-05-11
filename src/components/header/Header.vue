@@ -1,5 +1,8 @@
 <template>
   <el-row>
+    <el-col :span="1" class="logo">
+      <img src="../../assets/logo4.png">
+    </el-col>
     <el-col :span="8" class="biaoti">久梦股票管理系统</el-col>
     <el-col :span="8" class="userinfo">
       <el-dropdown trigger="hover">
@@ -63,9 +66,18 @@ export default {
     }
   }
 }
+.logo {
+  text-align: center;
+  height: 60px;
+  img {
+    width: 20px;
+    height: 20px;
+    margin: 20px 10px 10px 30px;
+    float: left;
+  }
+}
 .biaoti {
   text-align: left;
-  margin-left: 85px;
   color: #fff;
   font-size: 19px;
   font-style: italic;
