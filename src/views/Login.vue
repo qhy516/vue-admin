@@ -41,6 +41,7 @@
 <script>
 import axios from "axios";
 import md5 from "js-md5";
+import cookies from "js-cookie";
 export default {
   data() {
     return {
@@ -124,28 +125,33 @@ export default {
           param.append("name", this.ruleForm2.name);
           param.append("password", md5(this.ruleForm2.password));
           param.append("verifyCode", this.ruleForm2.verifyCode);
-          axios
-            .post("/admin/user/login", param)
-            .then(data => {
-              this.logining = false;
-              if (data.data.isSucc == false) {
-                this.$message({
-                  message: data.data.message,
-                  type: "error"
-                });
-              } else {
-                sessionStorage.setItem(
-                  "user",
-                  JSON.stringify(data.data.result)
-                );
-                this.$router.push({ path: "/index" });
-              }
-            });
+          axios.post("/admin/user/login", param).then(data => {
+            this.logining = false;
+            if (data.data.isSucc == false) {
+              this.$message({
+                message: data.data.message,
+                type: "error"
+              });
+            } else {
+              sessionStorage.setItem("user", JSON.stringify(data.data.result));
+              cookies.set("user", JSON.stringify(data.data.result), {
+                expires: 1
+              });
+              this.$router.push({ path: "/index" });
+            }
+          });
         } else {
           console.log("error submit!!");
           return false;
         }
       });
+    }
+  },
+  created() {
+    let user = cookies.get("user");
+    if (user) {
+      sessionStorage.setItem("user", user);
+      this.$router.push({ path: "/index" });
     }
   }
 };

@@ -14,125 +14,17 @@
       <i class="el-icon-s-home"></i>
       <span slot="title">首页</span>
     </el-menu-item>
-    <el-submenu index="2">
+
+    <el-submenu v-for="(item, index) in routerData" :key="index" :index="item.id">
       <template slot="title">
-        <i class="el-icon-user-solid"></i>
-        <span>用户管理</span>
+        <i :class="item.icon"></i>
+        <span>{{item.name}}</span>
       </template>
-      <el-menu-item index="/userlist">用户列表</el-menu-item>
-    </el-submenu>
-    <el-submenu index="3">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>钱包管理</span>
-      </template>
-      <el-menu-item index="/walletlist">钱包列表</el-menu-item>
-      <el-menu-item index="/walletloglist">钱包日志列表</el-menu-item>
-      <el-menu-item index="/">仓息列表</el-menu-item>
-    </el-submenu>
-    <el-submenu index="4">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>报表管理</span>
-      </template>
-      <el-menu-item index="/">资金报表</el-menu-item>
-      <el-menu-item index="/">持仓报表</el-menu-item>
-      <el-menu-item index="/">平仓报表</el-menu-item>
-      <el-menu-item index="/">挂单报表</el-menu-item>
-    </el-submenu>
-    <el-submenu index="5">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>委托管理</span>
-      </template>
-      <el-menu-item index="/">委托列表</el-menu-item>
-    </el-submenu>
-     <el-submenu index="6">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>风险管理</span>
-      </template>
-      <el-menu-item index="/">风险率列表</el-menu-item>
-    </el-submenu>
-      <el-submenu index="7">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>股票管理</span>
-      </template>
-      <el-menu-item index="/">股票列表</el-menu-item>
-      <el-menu-item index="/">交易时间</el-menu-item>
-    </el-submenu>
-    <el-submenu index="8">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>充值提现管理</span>
-      </template>
-      <el-menu-item index="/">充值列表</el-menu-item>
-      <el-menu-item index="/">提现列表</el-menu-item>
-    </el-submenu>
-    <el-submenu index="9">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>文章分类管理</span>
-      </template>
-      <el-menu-item index="/">文章分类列表</el-menu-item>
-    </el-submenu>
-     <el-submenu index="10">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>文章管理</span>
-      </template>
-      <el-menu-item index="/">文章列表</el-menu-item>
-    </el-submenu>
-     <el-submenu index="11">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>银行管理</span>
-      </template>
-      <el-menu-item index="/">银行列表</el-menu-item>
-    </el-submenu>
-     <el-submenu index="12">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>银行卡管理</span>
-      </template>
-      <el-menu-item index="/">银行卡列表</el-menu-item>
-    </el-submenu>
-     <el-submenu index="13">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>移动支付管理</span>
-      </template>
-      <el-menu-item index="/">移动支付列表</el-menu-item>
-    </el-submenu>
-     <el-submenu index="14">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>公司管理</span>
-      </template>
-      <el-menu-item index="/">公司列表</el-menu-item>
-    </el-submenu>
-     <el-submenu index="15">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>管理员管理</span>
-      </template>
-      <el-menu-item index="/">管理员列表</el-menu-item>
-      <el-menu-item index="/">操作日志列表</el-menu-item>
-    </el-submenu>
-     <el-submenu index="16">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>APP版本管理</span>
-      </template>
-      <el-menu-item index="/">APP版本列表</el-menu-item>
-    </el-submenu>
-     <el-submenu index="17">
-      <template slot="title">
-        <i class="el-icon-s-finance"></i>
-        <span>系统管理</span>
-      </template>
-      <el-menu-item index="/">系统参数列表</el-menu-item>
+      <el-menu-item
+        v-for="(child,indexx) in item.childs"
+        :key="indexx"
+        :index="child.path"
+      >{{child.name}}</el-menu-item>
     </el-submenu>
   </el-menu>
 </template>
@@ -142,14 +34,76 @@ export default {
   data() {
     return {
       router: true,
-      uniqueopened: true
+      uniqueopened: true,
+      routerData: [
+        {
+          id: 2,
+          name: "用户管理",
+          path: "",
+          icon: "el-icon-user-solid",
+          childs: [{ id: 21, name: "用户列表", path: "/userlist" }]
+        },
+        {
+          id: 3,
+          name: "钱包管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [
+            { id: 31, name: "钱包列表", path: "/walletlist" },
+            { id: 32, name: "钱包日志列表", path: "/walletloglist" },
+            { id: 33, name: "仓息列表", path: "/feelist" }
+          ]
+        },
+        {
+          id: 4,
+          name: "报表管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [
+            { id: 41, name: "资金报表", path: "/" },
+            { id: 42, name: "持仓报表", path: "/" },
+            { id: 43, name: "平仓报表", path: "/" },
+            { id: 44, name: "挂单报表", path: "/" }
+          ]
+        },
+        {
+          id: 5,
+          name: "委托管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [{ id: 51, name: "委托列表", path: "/" }]
+        },
+        {
+          id: 6,
+          name: "风险管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [{ id: 61, name: "风险率列表", path: "/" }]
+        },
+        {
+          id: 7,
+          name: "股票管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [
+            { id: 71, name: "股票列表", path: "/" },
+            { id: 72, name: "交易时间", path: "/" }
+          ]
+        },
+        {
+          id: 8,
+          name: "管理员管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [
+            { id: 81, name: "管理员列表", path: "/" },
+            { id: 82, name: "操作日志列表", path: "/" }
+          ]
+        }
+      ]
     };
   },
-  methods: {
-    toPage(path) {
-      this.$router.push(path);
-    }
-  }
+  methods: {}
 };
 </script>
 

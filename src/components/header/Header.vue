@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import cookies from "js-cookie";
 export default {
   data() {
     return { adminName: "" };
@@ -32,6 +33,7 @@ export default {
       })
         .then(() => {
           sessionStorage.removeItem("user");
+          cookies.remove("user");
           this.$router.push("/login");
         })
         .catch(() => {});

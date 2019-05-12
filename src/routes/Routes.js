@@ -5,7 +5,8 @@ import Index from '../views/index/Index.vue';
 import UserList from '../views/user/UserList.vue'
 import WalletList from '../views/wallet/WalletList.vue'
 import WalletLogList from '../views/walletlog/WalletLogList.vue';
-import WalletAsset from '../views/wallet/WalletAsset.vue'
+import WalletAsset from '../views/wallet/WalletAsset.vue';
+import FeeList from "../views/fee/FeeList.vue";
 
 
 let routes = [{
@@ -50,12 +51,16 @@ let routes = [{
                 name: '钱包日志列表'
             },
             {
+                path: '/feelist',
+                component: FeeList,
+                name: '仓息列表'
+            },
+            {
                 path: '/walletasset',
                 component: WalletAsset,
                 name: '资产估值'
             },
         ]
-
     },
 
 ];

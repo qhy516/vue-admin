@@ -21,7 +21,7 @@
           <el-col :span="8">
             <el-form-item label="所属公司：">
               <el-select class="select" v-model="search.cId" placeholder="所属公司">
-                <el-option label="全部" value="0"></el-option>
+                <el-option label="全部" value></el-option>
                 <el-option
                   v-for="item in companys"
                   :key="item.id"
@@ -87,7 +87,7 @@
             <el-tag v-if="scope.row.type===7" type="warning">强制平仓</el-tag>
             <el-tag v-if="scope.row.type===8" type="danger">用户充值</el-tag>
             <el-tag v-if="scope.row.type===9" type="danger">用户提现</el-tag>
-             <el-tag v-if="scope.row.type===10" type="warning">扣除仓息</el-tag>
+            <el-tag v-if="scope.row.type===10" type="warning">扣除仓息</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="money" label="金额" width="110" align="center"></el-table-column>
@@ -116,8 +116,8 @@ export default {
     return {
       search: {
         uId: null,
-        cId: null,
-        type: null,
+        cId: "",
+        type: "",
         qValUser: null,
         pageSize: 8,
         pageNumber: 1
@@ -126,7 +126,7 @@ export default {
       tableData: [],
       companys: [],
       walletTypes: [
-        { id: null, name: "全部" },
+        { id: "", name: "全部" },
         { id: 0, name: "人民币买单" },
         { id: 2, name: "人民币卖单" },
         { id: 1, name: "股票买单" },
@@ -153,7 +153,7 @@ export default {
           params: {
             qValUser: this.search.qValUser,
             uId: this.search.uId,
-            cId: this.search.cId === 0 ? null : this.search.cId,
+            cId: this.search.cId,
             type: this.search.type,
             pageSize: this.search.pageSize,
             pageNumber: this.search.pageNumber
@@ -170,6 +170,13 @@ export default {
             this.tableData = data.data.result.records;
             this.total = data.data.result.total;
           }
+        })
+        .catch(error => {
+          this.loading = false;
+          this.$message({
+            message: "数据获取失败",
+            type: "error"
+          });
         });
     },
     companyList() {

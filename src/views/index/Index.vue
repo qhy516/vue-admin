@@ -22,7 +22,7 @@
         </el-card>
       </el-col>
       <el-col span="5" offset="1">
-        <el-card >
+        <el-card>
           <div slot="header" class="clearfix">
             <span>今日支出</span>
           </div>
@@ -39,10 +39,9 @@
           <p style="font-size: 14px;padding-top: 10px;">总访客：29万</p>
         </el-card>
       </el-col>
-      
     </el-row>
     <Row>
-      <el-col >
+      <el-col>
         <el-card :style="{width:'96%',height:'350px'}">
           <div id="main" :style="{width:'50%',height: '300px'}" style="float: left;"></div>
           <div id="echarts" :style="{width:'50%', height: '300px'}" style="float: left;"></div>
@@ -53,6 +52,7 @@
 </template>
 <script>
 import echarts from "echarts";
+import cookies from "js-cookie";
 export default {
   data() {
     return {
@@ -171,6 +171,9 @@ export default {
       this.drawPie("main");
       this.drawPie2("echarts");
     });
+  },
+  created() {
+    console.log(cookies.get("user"));
   },
   computed: {
     menuitemClasses: function() {
