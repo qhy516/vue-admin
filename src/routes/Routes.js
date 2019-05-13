@@ -7,6 +7,9 @@ import WalletList from '../views/wallet/WalletList.vue'
 import WalletLogList from '../views/walletlog/WalletLogList.vue';
 import WalletAsset from '../views/wallet/WalletAsset.vue';
 import FeeList from "../views/fee/FeeList.vue";
+import EntrustList from "../views/entrust/EntrustList.vue";
+import AdminList from "../views/admin/AdminList.vue";
+import AdminLogList from "../views/adminLog/AdminLogList.vue";
 
 
 let routes = [{
@@ -54,6 +57,21 @@ let routes = [{
                 path: '/feelist',
                 component: FeeList,
                 name: '仓息列表'
+            },
+            {
+                path: '/entrustlist',
+                component: EntrustList,
+                name: '委托列表'
+            },
+            {
+                path: '/adminlist',
+                component: AdminList,
+                name: '管理员列表'
+            },
+            {
+                path: '/adminloglist',
+                component: AdminLogList,
+                name: '管理员日志列表'
             },
             {
                 path: '/walletasset',

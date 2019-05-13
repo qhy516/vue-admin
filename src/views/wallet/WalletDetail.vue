@@ -39,7 +39,6 @@ export default {
       pageNumber: 1,
       tableData: [],
       total: 0,
-      currentRow: null
     };
   },
   methods: {

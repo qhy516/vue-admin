@@ -23,23 +23,6 @@
               ></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="时间筛选：" label-width="90px">
-              <el-date-picker
-                class="picker"
-                v-model="search.time"
-                @change="pickerChage"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-              ></el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-form>
-      </el-row>
-      <el-row>
-        <el-form :inline="true" :model="search" class="demo-form-inline">
           <el-col :span="6">
             <el-form-item label="用户ID：" label-width="90px">
               <el-input class="forminput" size="small" v-model="search.uId" placeholder="用户ID"></el-input>
@@ -60,8 +43,12 @@
               </el-col>
             </el-form-item>
           </el-col>
-          <el-col :span="7">
-            <el-form-item label="统计状态：" label-width="90px">
+        </el-form>
+      </el-row>
+      <el-row>
+        <el-form :inline="true" :model="search" class="demo-form-inline">
+          <el-col :span="6">
+            <el-form-item label="统计状态：" label-width="90px" style="width:102%">
               <el-col :span="22">
                 <el-select class="select" v-model="search.statistics" placeholder="统计状态">
                   <el-option label="全部" value></el-option>
@@ -71,13 +58,26 @@
               </el-col>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="时间筛选：" label-width="90px">
+              <el-date-picker
+                class="picker"
+                v-model="search.time"
+                @change="pickerChage"
+                type="daterange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
         </el-form>
       </el-row>
       <el-row class="chaozuobut">
         <el-button type="primary" size="small" @click="onSubmit">查询</el-button>
-        <el-button type="warning" size="small" @click="add">详情</el-button>
-        <el-button type="info" size="small" @click="update">修改</el-button>
-        <el-button type="danger" size="small" @click="rrole">删除</el-button>
+        <el-button type="warning" size="small" @click="add"></el-button>
+        <el-button type="info" size="small" @click="update"></el-button>
+        <el-button type="danger" size="small" @click="rrole"></el-button>
       </el-row>
     </el-card>
     <el-card>
@@ -151,6 +151,10 @@ export default {
       if (pick) {
         this.search.startTime = moment(pick[0]).format("YYYY-MM-DD");
         this.search.endTime = moment(pick[1]).format("YYYY-MM-DD");
+      }else{
+        this.search.startTime="";
+        this.search.endTime="";
+
       }
     },
     companyList() {

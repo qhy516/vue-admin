@@ -4,7 +4,7 @@
       <el-row>
         <el-form :inline="true" :model="search" class="demo-form-inline">
           <el-col :span="6">
-            <el-form-item label="条件搜索：">
+            <el-form-item label="条件搜索：" label-width="90px">
               <el-input
                 class="forminput"
                 size="small"
@@ -14,44 +14,46 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="用户ID：">
+            <el-form-item label="用户ID：" label-width="90px">
               <el-input class="forminput" size="small" v-model="search.uId" placeholder="用户ID"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
-            <el-form-item label="所属公司：">
-              <el-select class="select" v-model="search.cId" placeholder="所属公司">
-                <el-option label="全部" value></el-option>
-                <el-option
-                  v-for="item in companys"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id"
-                ></el-option>
-              </el-select>
+          <el-col :span="6">
+            <el-form-item label="所属公司：" label-width="90px" style="width:102%">
+              <el-col :span="22">
+                <el-select class="select" v-model="search.cId" placeholder="所属公司">
+                  <el-option label="全部" value></el-option>
+                  <el-option
+                    v-for="item in companys"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+              </el-col>
             </el-form-item>
           </el-col>
-        </el-form>
-        <el-form :inline="true" :model="search" class="demo-form-inline">
-          <el-form-item label="钱包类型：">
-            <el-col :span="22">
-              <el-select class="select" v-model="search.type" placeholder="钱包类型">
-                <el-option
-                  v-for="item in walletTypes"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id"
-                ></el-option>
-              </el-select>
-            </el-col>
-          </el-form-item>
+          <el-col :span="6">
+            <el-form-item label="钱包类型：" label-width="90px" style="width:102%">
+              <el-col :span="22">
+                <el-select class="select" v-model="search.type" placeholder="钱包类型">
+                  <el-option
+                    v-for="item in walletTypes"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  ></el-option>
+                </el-select>
+              </el-col>
+            </el-form-item>
+          </el-col>
         </el-form>
       </el-row>
       <el-row class="chaozuobut">
         <el-button type="primary" size="small" @click="onSubmit">查询</el-button>
-        <el-button type="warning" size="small" @click="info">详情</el-button>
-        <el-button type="info" size="small" @click="update">修改</el-button>
-        <el-button type="danger" size="small" @click="deleted">删除</el-button>
+        <el-button type="warning" size="small"></el-button>
+        <el-button type="info" size="small"></el-button>
+        <el-button type="danger" size="small"></el-button>
       </el-row>
     </el-card>
     <el-card>

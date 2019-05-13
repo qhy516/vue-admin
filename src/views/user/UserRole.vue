@@ -2,24 +2,24 @@
   <el-dialog title="用户权限编辑" :visible="this.visible" width="50%" @close="closeDialog">
     <el-form :inline="true" :model="role" class="demo-form-inline">
       <el-col :span="12">
-        <el-form-item label="用户账号：">
+        <el-form-item label="用户账号：" label-width="100px">
           <el-input v-model="role.userName" :disabled="true"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="用户姓名：">
+        <el-form-item label="用户姓名：" label-width="100px">
           <el-input v-model="role.realName" :disabled="true"></el-input>
         </el-form-item>
       </el-col>
     </el-form>
     <el-form :inline="true" :model="role" class="demo-form-inline">
       <el-col :span="12">
-        <el-form-item label="所属公司：">
+        <el-form-item label="所属公司：" label-width="100px">
           <el-input v-model="role.companyName" :disabled="true"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="用户状态：">
+        <el-form-item label="用户状态：" label-width="100px">
           <el-input v-if="role.deleted===0" value="正常" :disabled="true"></el-input>
           <el-input v-if="role.deleted===1" value="禁用" :disabled="true"></el-input>
         </el-form-item>
@@ -28,65 +28,79 @@
     <el-form ref="form" :model="userAuth">
       <el-row>
         <el-col :span="12">
-          <el-form-item label="登录权限：">
-            <el-select v-model="userAuth.unLogin">
-              <el-option label="允许" :value="false"></el-option>
-              <el-option label="禁止" :value="true"></el-option>
-            </el-select>
+          <el-form-item label="登录权限：" label-width="100px">
+            <el-col :span="19">
+              <el-select v-model="userAuth.unLogin">
+                <el-option label="允许" :value="false"></el-option>
+                <el-option label="禁止" :value="true"></el-option>
+              </el-select>
+            </el-col>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="买进权限：">
-            <el-select v-model="userAuth.unBuy">
-              <el-option label="允许" :value="false"></el-option>
-              <el-option label="禁止" :value="true"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="卖出权限：">
-            <el-select v-model="userAuth.unSell">
-              <el-option label="允许" :value="false"></el-option>
-              <el-option label="禁止" :value="true"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="充值权限：">
-            <el-select v-model="userAuth.unRecharge">
-              <el-option label="允许" :value="false"></el-option>
-              <el-option label="禁止" :value="true"></el-option>
-            </el-select>
+          <el-form-item label="买进权限：" label-width="100px">
+            <el-col :span="19">
+              <el-select v-model="userAuth.unBuy">
+                <el-option label="允许" :value="false"></el-option>
+                <el-option label="禁止" :value="true"></el-option>
+              </el-select>
+            </el-col>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="提现权限：">
-            <el-select v-model="userAuth.unWithdraw">
-              <el-option label="允许" :value="false"></el-option>
-              <el-option label="禁止" :value="true"></el-option>
-            </el-select>
+          <el-form-item label="卖出权限：" label-width="100px">
+            <el-col :span="19">
+              <el-select v-model="userAuth.unSell">
+                <el-option label="允许" :value="false"></el-option>
+                <el-option label="禁止" :value="true"></el-option>
+              </el-select>
+            </el-col>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="券买权限：">
-            <el-select v-model="userAuth.unBuyMargin">
-              <el-option label="允许" :value="false"></el-option>
-              <el-option label="禁止" :value="true"></el-option>
-            </el-select>
+          <el-form-item label="充值权限：" label-width="100px">
+            <el-col :span="19">
+              <el-select v-model="userAuth.unRecharge">
+                <el-option label="允许" :value="false"></el-option>
+                <el-option label="禁止" :value="true"></el-option>
+              </el-select>
+            </el-col>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="券卖权限：">
-            <el-select v-model="userAuth.unSellMargin">
-              <el-option label="允许" :value="false"></el-option>
-              <el-option label="禁止" :value="true"></el-option>
-            </el-select>
+          <el-form-item label="提现权限：" label-width="100px">
+            <el-col :span="19">
+              <el-select v-model="userAuth.unWithdraw">
+                <el-option label="允许" :value="false"></el-option>
+                <el-option label="禁止" :value="true"></el-option>
+              </el-select>
+            </el-col>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="券买权限：" label-width="100px">
+            <el-col :span="19">
+              <el-select v-model="userAuth.unBuyMargin">
+                <el-option label="允许" :value="false"></el-option>
+                <el-option label="禁止" :value="true"></el-option>
+              </el-select>
+            </el-col>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item label="券卖权限：" label-width="100px">
+            <el-col :span="19">
+              <el-select v-model="userAuth.unSellMargin">
+                <el-option label="允许" :value="false"></el-option>
+                <el-option label="禁止" :value="true"></el-option>
+              </el-select>
+            </el-col>
           </el-form-item>
         </el-col>
       </el-row>

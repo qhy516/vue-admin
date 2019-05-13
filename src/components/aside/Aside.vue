@@ -7,15 +7,13 @@
     background-color="#545c64"
     text-color="#fff"
     active-text-color="#ffd04b"
-    @open="handleOpen"
-    @close="handleClose"
   >
     <el-menu-item index="/index">
       <i class="el-icon-s-home"></i>
       <span slot="title">首页</span>
     </el-menu-item>
 
-    <el-submenu v-for="(item, index) in routerData" :key="index" :index="item.id">
+    <el-submenu v-for="(item, index) in routerData" :key="index" :index="item.id+''">
       <template slot="title">
         <i :class="item.icon"></i>
         <span>{{item.name}}</span>
@@ -71,7 +69,7 @@ export default {
           name: "委托管理",
           path: "",
           icon: "el-icon-s-finance",
-          childs: [{ id: 51, name: "委托列表", path: "/" }]
+          childs: [{ id: 51, name: "委托列表", path: "/entrustlist" }]
         },
         {
           id: 6,
@@ -96,8 +94,8 @@ export default {
           path: "",
           icon: "el-icon-s-finance",
           childs: [
-            { id: 81, name: "管理员列表", path: "/" },
-            { id: 82, name: "操作日志列表", path: "/" }
+            { id: 81, name: "管理员列表", path: "/adminlist" },
+            { id: 82, name: "操作日志列表", path: "/adminloglist" }
           ]
         }
       ]

@@ -28,7 +28,7 @@
       <el-row class="chaozuobut">
         <el-button type="primary" size="small" @click="onSubmit">查询</el-button>
         <el-button type="warning" size="small" @click="add">新增</el-button>
-        <el-button type="info" size="small" @click="update">修改</el-button>
+        <el-button type="info" size="small" @click="update">编辑</el-button>
         <el-button type="danger" size="small" @click="rrole">权限</el-button>
       </el-row>
     </el-card>
@@ -46,7 +46,7 @@
         <el-table-column prop="id" label="#" width="60"></el-table-column>
         <el-table-column
           prop="createTime"
-          label="日期"
+          label="创建时间"
           :formatter="dateFormat"
           width="200"
           align="center"
@@ -81,7 +81,7 @@
       </el-table>
       <el-pagination
         class="pagination"
-        page-size="8"
+        :page-size="this.formInline.pageSize"
         background
         layout="prev, pager, next, total"
         :total="this.total"
@@ -122,7 +122,8 @@ export default {
         uId: "",
         phone: "",
         realName: "",
-        pageNumber: 1
+        pageNumber: 1,
+        pageSize: 8
       },
       total: null,
       loading: false,
@@ -226,7 +227,7 @@ export default {
         this.multipleSelection.length !== 1
       ) {
         this.$message({
-          message: "我只能操作一个用户",
+          message: "我只能操作一条数据",
           type: "warning"
         });
       } else {
@@ -248,7 +249,7 @@ export default {
         this.multipleSelection.length !== 1
       ) {
         this.$message({
-          message: "我只能操作一个用户",
+          message: "我只能操作一条数据",
           type: "warning"
         });
       } else {

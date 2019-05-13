@@ -3,7 +3,7 @@
     <el-col :span="1" class="logo">
       <img src="../../assets/logo4.png">
     </el-col>
-    <el-col :span="8" class="biaoti">久梦股票管理系统</el-col>
+    <el-col :span="8" class="biaoti">机构专用版管理系统</el-col>
     <el-col :span="8" class="userinfo">
       <el-dropdown trigger="hover">
         <span class="el-dropdown-link userinfo-inner">

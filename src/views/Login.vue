@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import md5 from "js-md5";
 import cookies from "js-cookie";
 export default {
@@ -79,7 +78,7 @@ export default {
       let param = new URLSearchParams();
       param.append("name", this.ruleForm2.name);
       param.append("password", this.ruleForm2.password);
-      axios
+      this.axios
         .post("/admin/user/getVerifyCode", param)
         .then(data => {
           if (data.data.isSucc == false) {
@@ -125,7 +124,7 @@ export default {
           param.append("name", this.ruleForm2.name);
           param.append("password", md5(this.ruleForm2.password));
           param.append("verifyCode", this.ruleForm2.verifyCode);
-          axios.post("/admin/user/login", param).then(data => {
+          this.axios.post("/admin/user/login", param).then(data => {
             this.logining = false;
             if (data.data.isSucc == false) {
               this.$message({

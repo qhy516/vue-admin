@@ -169,7 +169,7 @@ export default {
         this.multipleSelection.length !== 1
       ) {
         this.$message({
-          message: "我只能操作一个用户",
+          message: "我只能操作一条数据",
           type: "warning"
         });
       } else {
@@ -182,7 +182,7 @@ export default {
         this.multipleSelection.length !== 1
       ) {
         this.$message({
-          message: "我只能操作一个用户",
+          message: "我只能操作一条数据",
           type: "warning"
         });
       } else {
@@ -195,7 +195,7 @@ export default {
         this.multipleSelection.length !== 1
       ) {
         this.$message({
-          message: "我只能操作一个用户",
+          message: "我只能操作一条数据",
           type: "warning"
         });
       } else {
