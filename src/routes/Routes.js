@@ -8,8 +8,16 @@ import WalletLogList from '../views/walletlog/WalletLogList.vue';
 import WalletAsset from '../views/wallet/WalletAsset.vue';
 import FeeList from "../views/fee/FeeList.vue";
 import EntrustList from "../views/entrust/EntrustList.vue";
+import CloseLineList from "../views/closeLine/CloseLineList.vue";
+import StockList from "../views/stock/StockList.vue";
+import TradeTimeList from "../views/tradetime/TradeTimeList.vue";
+import RechargeList from "../views/finance/recharge/RechargeList.vue";
+import WithdrawalList from "../views/finance/withdrawal/WithdrawalList.vue";
+import CompanyList from "../views/company/CompanyList.vue";
 import AdminList from "../views/admin/AdminList.vue";
 import AdminLogList from "../views/adminLog/AdminLogList.vue";
+import AppVersionList from "../views/appVersion/AppVersionList.vue";
+import SystemList from "../views/system/SystemList.vue";
 
 
 let routes = [{
@@ -37,7 +45,7 @@ let routes = [{
         children: [{
                 path: '/index',
                 component: Index,
-                name: '主页'
+                name: '主页',
             }, {
                 path: '/userlist',
                 component: UserList,
@@ -64,6 +72,36 @@ let routes = [{
                 name: '委托列表'
             },
             {
+                path: '/closelinelist',
+                component: CloseLineList,
+                name: '风险率列表'
+            },
+            {
+                path: '/stocklist',
+                component: StockList,
+                name: '股票列表'
+            },
+            {
+                path: '/tradetimelist',
+                component: TradeTimeList,
+                name: '交易时间'
+            },
+            {
+                path: '/rechargelist',
+                component: RechargeList,
+                name: '充值列表'
+            },
+            {
+                path: '/withdrawallist',
+                component: WithdrawalList,
+                name: '提现列表'
+            },
+            {
+                path: '/companylist',
+                component: CompanyList,
+                name: '公司列表'
+            },
+            {
                 path: '/adminlist',
                 component: AdminList,
                 name: '管理员列表'
@@ -74,9 +112,14 @@ let routes = [{
                 name: '管理员日志列表'
             },
             {
-                path: '/walletasset',
-                component: WalletAsset,
-                name: '资产估值'
+                path: '/appversionlist',
+                component: AppVersionList,
+                name: 'app版本列表'
+            },
+            {
+                path: '/systemlist',
+                component: SystemList,
+                name: '系统参数列表'
             },
         ]
     },

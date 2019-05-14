@@ -27,9 +27,9 @@
       </el-row>
       <el-row class="chaozuobut">
         <el-button type="primary" size="small" @click="onSubmit">查询</el-button>
-        <el-button type="warning" size="small" @click="add">新增</el-button>
         <el-button type="info" size="small" @click="update">编辑</el-button>
         <el-button type="danger" size="small" @click="rrole">权限</el-button>
+        <el-button type="warning" size="small"></el-button>
       </el-row>
     </el-card>
     <el-card>
@@ -51,8 +51,8 @@
           width="200"
           align="center"
         ></el-table-column>
-        <el-table-column prop="companyName" label="公司" width="120" align="center"></el-table-column>
-        <el-table-column prop="realName" label="姓名" width="120" align="center"></el-table-column>
+        <el-table-column prop="companyName" label="所属公司" width="120" align="center"></el-table-column>
+        <el-table-column prop="realName" label="真实姓名" width="120" align="center"></el-table-column>
         <el-table-column prop="phone" label="手机号" width="180" align="center"></el-table-column>
         <el-table-column prop="icardNum" label="身份证号" width="180" align="center"></el-table-column>
         <el-table-column prop="deleted" label="状态" width="150" align="center">

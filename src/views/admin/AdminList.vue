@@ -27,8 +27,8 @@
           width="200"
           align="center"
         ></el-table-column>
-        <el-table-column prop="name" label="账号" width="120" align="center"></el-table-column>
-        <el-table-column prop="companyName" label="所属公司" width="120" align="center"></el-table-column>
+        <el-table-column prop="name" label="账号" width="180" align="center"></el-table-column>
+        <el-table-column prop="companyName" label="所属公司" width="180" align="center"></el-table-column>
         <el-table-column prop="phone" label="手机号" width="180" align="center"></el-table-column>
         <el-table-column prop="deleted" label="状态" width="150" align="center">
           <template slot-scope="scope">
@@ -36,7 +36,7 @@
             <el-tag v-if="scope.row.deleted === 1" type="danger" disable-transitions>禁用</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="150" align="center">
+        <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.deleted===0"

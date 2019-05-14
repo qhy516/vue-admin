@@ -1,30 +1,8 @@
 <template>
   <div>
     <el-card class="box-card">
-      <el-row>
-        <el-form :inline="true" :model="search" class="demo-form-inline">
-          <el-col :span="7">
-            <el-form-item label="管理员ID：" label-width="100px">
-              <el-input class="forminput" size="small" v-model="search.adminId" placeholder="管理员ID"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="时间筛选：" label-width="100px">
-              <el-date-picker
-                class="picker"
-                v-model="search.time"
-                @change="pickerChage"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-              ></el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-form>
-      </el-row>
       <el-row class="chaozuobut">
-        <el-button type="primary" size="small" @click="onSubmit">查询</el-button>
+        <el-button type="primary" size="small" @click="tradeTimeAdd">添加</el-button>
         <el-button type="warning" size="small"></el-button>
         <el-button type="info" size="small"></el-button>
         <el-button type="danger" size="small"></el-button>
@@ -41,20 +19,36 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="60"></el-table-column>
+        <el-table-column prop="id" label="#" width="80"></el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
           :formatter="dateFormat"
-          width="160"
+          width="200"
           align="center"
         ></el-table-column>
-        <el-table-column prop="adminName" label="管理员账户" width="120" align="center"></el-table-column>
-        <el-table-column prop="des" label="操作描述" width="160" align="center"></el-table-column>
-        <el-table-column prop="url" label="操作地址" width="280" align="center"></el-table-column>
-        <el-table-column prop="content" label="操作内容" width="390" align="center">
+        <el-table-column
+          prop="tradeTime"
+          label="交易时间"
+          :formatter="dateFormat"
+          width="200"
+          align="center"
+        ></el-table-column>
+        <el-table-column prop="type" label="交易状态" width="250" align="center">
           <template slot-scope="scope">
-            <el-input type="textarea" :rows="1" v-model="scope.row.content"></el-input>
+            <el-tag v-if="scope.row.type === 0" type="info">可交易</el-tag>
+            <el-tag v-if="scope.row.type === 1" type="danger">不可交易</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="deleted" label="是否删除" width="250" align="center">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.deleted === false" type="success">正常</el-tag>
+            <el-tag v-if="scope.row.deleted === true" type="warning">删除</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="180" align="center">
+          <template slot-scope="scope">
+            <el-button @click="deleteClick(scope.row)" type="text" size="small">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -68,22 +62,23 @@
         @current-change="currentChange"
       ></el-pagination>
     </el-card>
+    <Add v-if="this.add" v-on:childEvent="listenAddChild"></Add>
   </div>
 </template>
 <script>
+import Add from "./TradeTimeAdd.vue";
 import moment from "moment";
 export default {
+  components: { Add },
   data() {
     return {
       search: {
-        adminId: "",
         pageNumber: 1,
-        time: "",
-        startTime: "",
-        endTime: ""
+        pageSize: 8
       },
-      loading: false,
       total: 0,
+      loading: false,
+      add: false,
       tableData: [],
       multipleSelection: []
     };
@@ -95,11 +90,8 @@ export default {
     list() {
       this.loading = true;
       this.axios
-        .get("/admin/adminLog/list", {
+        .get("/admin/stockTradeTime/list", {
           params: {
-            adminId: this.search.adminId,
-            startTime: this.search.startTime,
-            endTime: this.search.endTime,
             pageNumber: this.search.pageNumber
           }
         })
@@ -123,22 +115,41 @@ export default {
           });
         });
     },
-    onSubmit() {
-      this.search.pageNumber = 1;
-      this.list();
+    tradeTimeAdd() {
+      this.add = true;
     },
-    pickerChage() {
-      let pick = this.search.time;
-      if (pick) {
-        this.search.startTime = moment(pick[0]).format("YYYY-MM-DD");
-        this.search.endTime = moment(pick[1]).format("YYYY-MM-DD");
-      } else {
-        this.search.startTime = "";
-        this.search.endTime = "";
-      }
+    deleteClick(row) {
+      this.$confirm(
+        "确认关闭吗？关闭后该时间段将无法交易，请谨慎操作。",
+        "提示",
+        {
+          type: "warning"
+        }
+      )
+        .then(() => {
+          this.axios
+            .delete("/admin/stockTradeTime/deleted", {
+              params: { tradeTimeId: row.id }
+            })
+            .then(data => {
+              if (data.data.isSucc == false) {
+                this.$message({
+                  message: data.data.message,
+                  type: "error"
+                });
+              } else {
+                this.$message({
+                  message: "操作成功",
+                  type: "success"
+                });
+                this.list();
+              }
+            });
+        })
+        .catch(() => {});
     },
-    currentChange(cur) {
-      this.search.pageNumber = cur;
+    listenAddChild() {
+      this.add = false;
       this.list();
     },
     dateFormat(row, column) {
@@ -147,6 +158,10 @@ export default {
         return "";
       }
       return moment(date).format("YYYY-MM-DD HH:mm:ss");
+    },
+    currentChange(cur) {
+      this.search.pageNumber = cur;
+      this.list();
     }
   },
   created() {
@@ -155,10 +170,3 @@ export default {
 };
 </script>
 
-<style>
-.chaozuobut {
-  text-align: right;
-  margin-bottom: -12px;
-  margin-right: 20px;
-}
-</style>

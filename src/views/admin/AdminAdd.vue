@@ -1,23 +1,23 @@
 <template>
-  <el-dialog title="新增管理员" :visible="this.visible" width="50%" @close="cancel">
+  <el-dialog title="新增管理员" :visible="this.visible" width="40%" @close="cancel">
     <el-form :model="detail" :rules="rules" ref="ruleForm">
       <el-form-item label="昵称：" prop="name" :label-width="formLabelWidth">
-        <el-col :span="12">
+        <el-col :span="16">
           <el-input v-model="detail.name" placeholder="请设置账户名称"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="密码：" prop="password" :label-width="formLabelWidth">
-        <el-col :span="12">
+        <el-col :span="16">
           <el-input v-model="detail.password" placeholder="请设置账户密码"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="手机号：" prop="phone" :label-width="formLabelWidth">
-        <el-col :span="12">
+        <el-col :span="16">
           <el-input v-model="detail.phone" placeholder="请设置手机号"></el-input>
         </el-col>
       </el-form-item>
       <el-form-item label="验证码：" prop="verifyCode" :label-width="formLabelWidth">
-        <el-col :span="5">
+        <el-col :span="8">
           <el-input v-model="detail.verifyCode" placeholder="输入验证码"></el-input>
         </el-col>
         <el-col :span="1">
@@ -31,7 +31,7 @@
         </el-col>
       </el-form-item>
       <el-form-item label="所属公司：" prop="companyId" :label-width="formLabelWidth">
-        <el-col :span="12">
+        <el-col :span="16">
           <el-select class="select" v-model="detail.companyId" placeholder="请选择所在公司">
             <el-option v-for="item in companys" :key="item.id" :label="item.name" :value="item.id"></el-option>
           </el-select>
@@ -82,7 +82,7 @@ export default {
       show: true,
       butDisabled: false,
       timer: null,
-      formLabelWidth: "250px",
+      formLabelWidth: "200px",
       companys: [],
       visible: true,
       adding: false

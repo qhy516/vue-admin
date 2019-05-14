@@ -3,29 +3,27 @@
     <el-card class="box-card">
       <el-row>
         <el-form :inline="true" :model="search" class="demo-form-inline">
-          <el-col :span="7">
-            <el-form-item label="管理员ID：" label-width="100px">
-              <el-input class="forminput" size="small" v-model="search.adminId" placeholder="管理员ID"></el-input>
+          <el-col :span="6">
+            <el-form-item label="操作系统：" label-width="90px" style="width:102%">
+              <el-col :span="22">
+                <el-select class="select" v-model="search.flatform" placeholder="app操作系统">
+                  <el-option label="全部" value></el-option>
+                  <el-option label="Android" value="0"></el-option>
+                  <el-option label="Ios" value="1"></el-option>
+                </el-select>
+              </el-col>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="时间筛选：" label-width="100px">
-              <el-date-picker
-                class="picker"
-                v-model="search.time"
-                @change="pickerChage"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-              ></el-date-picker>
+          <el-col :span="6">
+            <el-form-item label="APP版本：" label-width="90px">
+              <el-input class="forminput" size="small" v-model="search.ver" placeholder="根据APP版本查询"></el-input>
             </el-form-item>
           </el-col>
         </el-form>
       </el-row>
       <el-row class="chaozuobut">
         <el-button type="primary" size="small" @click="onSubmit">查询</el-button>
-        <el-button type="warning" size="small"></el-button>
+        <el-button type="warning" size="small" @click="versionAdd">新增</el-button>
         <el-button type="info" size="small"></el-button>
         <el-button type="danger" size="small"></el-button>
       </el-row>
@@ -43,18 +41,30 @@
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="id" label="#" width="60"></el-table-column>
         <el-table-column
+          fixed
           prop="createTime"
           label="创建时间"
           :formatter="dateFormat"
-          width="160"
+          width="200"
           align="center"
         ></el-table-column>
-        <el-table-column prop="adminName" label="管理员账户" width="120" align="center"></el-table-column>
-        <el-table-column prop="des" label="操作描述" width="160" align="center"></el-table-column>
-        <el-table-column prop="url" label="操作地址" width="280" align="center"></el-table-column>
-        <el-table-column prop="content" label="操作内容" width="390" align="center">
+        <el-table-column prop="platform" label="操作系统" width="120" align="center">
           <template slot-scope="scope">
-            <el-input type="textarea" :rows="1" v-model="scope.row.content"></el-input>
+            <el-tag v-if="scope.row.platform === 0" type="info" disable-transitions>Android</el-tag>
+            <el-tag v-if="scope.row.platform === 1" disable-transitions>Ios</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="ver" label="版本号" width="120" align="center"></el-table-column>
+        <el-table-column prop="deleted" label="强制更新" width="120" align="center">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.forceUpdate === 0" type="danger" disable-transitions>不强制更新</el-tag>
+            <el-tag v-if="scope.row.forceUpdate === 1" type="warning" disable-transitions>强制更新</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="url" label="安装包链接" width="270" align="center"></el-table-column>
+        <el-table-column prop="des" label="描述" width="280" align="center">
+          <template slot-scope="scope">
+            <el-input type="textarea" :rows="1" v-model="scope.row.des"></el-input>
           </template>
         </el-table-column>
       </el-table>
@@ -68,22 +78,25 @@
         @current-change="currentChange"
       ></el-pagination>
     </el-card>
+    <Add v-if="this.add" v-on:childEvent="listenAddChild"></Add>
   </div>
 </template>
 <script>
+import Add from "./AppVersionAdd.vue";
 import moment from "moment";
 export default {
+  components: { Add },
   data() {
     return {
       search: {
-        adminId: "",
+        flatform: "",
+        ver: "",
         pageNumber: 1,
-        time: "",
-        startTime: "",
-        endTime: ""
+        pageSize: 8
       },
-      loading: false,
+      add: false,
       total: 0,
+      loading: false,
       tableData: [],
       multipleSelection: []
     };
@@ -95,17 +108,17 @@ export default {
     list() {
       this.loading = true;
       this.axios
-        .get("/admin/adminLog/list", {
+        .get("/admin/appVersion/list", {
           params: {
-            adminId: this.search.adminId,
-            startTime: this.search.startTime,
-            endTime: this.search.endTime,
-            pageNumber: this.search.pageNumber
+            flatform: this.search.flatform,
+            ver: this.search.ver,
+            pageNumber: this.search.pageNumber,
+            pageSize: this.search.pageSize
           }
         })
         .then(data => {
           this.loading = false;
-          if (data.data.isSucc == false) {
+          if (data.data.isSucc === false) {
             this.$message({
               message: data.data.message,
               type: "error"
@@ -127,18 +140,11 @@ export default {
       this.search.pageNumber = 1;
       this.list();
     },
-    pickerChage() {
-      let pick = this.search.time;
-      if (pick) {
-        this.search.startTime = moment(pick[0]).format("YYYY-MM-DD");
-        this.search.endTime = moment(pick[1]).format("YYYY-MM-DD");
-      } else {
-        this.search.startTime = "";
-        this.search.endTime = "";
-      }
+    versionAdd() {
+      this.add = true;
     },
-    currentChange(cur) {
-      this.search.pageNumber = cur;
+    listenAddChild(data) {
+      this.add = false;
       this.list();
     },
     dateFormat(row, column) {
@@ -147,6 +153,10 @@ export default {
         return "";
       }
       return moment(date).format("YYYY-MM-DD HH:mm:ss");
+    },
+    currentChange(cur) {
+      this.search.pageNumber = cur;
+      this.list();
     }
   },
   created() {
@@ -155,10 +165,3 @@ export default {
 };
 </script>
 
-<style>
-.chaozuobut {
-  text-align: right;
-  margin-bottom: -12px;
-  margin-right: 20px;
-}
-</style>

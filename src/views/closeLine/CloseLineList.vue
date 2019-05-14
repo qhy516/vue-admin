@@ -3,22 +3,24 @@
     <el-card class="box-card">
       <el-row>
         <el-form :inline="true" :model="search" class="demo-form-inline">
-          <el-col :span="7">
-            <el-form-item label="管理员ID：" label-width="100px">
-              <el-input class="forminput" size="small" v-model="search.adminId" placeholder="管理员ID"></el-input>
+          <el-col :span="6">
+            <el-form-item label="用户ID：" label-width="90px">
+              <el-input class="forminput" size="small" v-model="search.uId" placeholder="用户ID"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="时间筛选：" label-width="100px">
-              <el-date-picker
-                class="picker"
-                v-model="search.time"
-                @change="pickerChage"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-              ></el-date-picker>
+          <el-col :span="6">
+            <el-form-item label="条件搜索：" label-width="90px">
+              <el-input class="forminput" size="small" v-model="search.qVal" placeholder="手机号/用户姓名"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="风险率：" label-width="90px">
+              <el-input
+                class="forminput"
+                size="small"
+                v-model="search.closeLine"
+                placeholder="风险率范围0~1"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-form>
@@ -41,20 +43,20 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="60"></el-table-column>
+        <el-table-column prop="userId" label="用户#" width="180"></el-table-column>
         <el-table-column
-          prop="createTime"
-          label="创建时间"
+          prop="updateTime"
+          label="更新时间"
           :formatter="dateFormat"
-          width="160"
+          width="200"
           align="center"
         ></el-table-column>
-        <el-table-column prop="adminName" label="管理员账户" width="120" align="center"></el-table-column>
-        <el-table-column prop="des" label="操作描述" width="160" align="center"></el-table-column>
-        <el-table-column prop="url" label="操作地址" width="280" align="center"></el-table-column>
-        <el-table-column prop="content" label="操作内容" width="390" align="center">
+        <el-table-column prop="realName" label="姓名" width="180" align="center"></el-table-column>
+        <el-table-column prop="phone" label="手机号" width="180" align="center"></el-table-column>
+        <el-table-column prop="companyName" label="所属公司" width="180" align="center"></el-table-column>
+        <el-table-column prop="closeLine" label="风险率(亏损百分之)" width="180" align="center">
           <template slot-scope="scope">
-            <el-input type="textarea" :rows="1" v-model="scope.row.content"></el-input>
+            <el-tag type="danger">{{scope.row.closeLine*100}}%</el-tag>
           </template>
         </el-table-column>
       </el-table>
@@ -76,14 +78,14 @@ export default {
   data() {
     return {
       search: {
-        adminId: "",
+        uId: "",
+        qVal: "",
+        closeLine: "",
         pageNumber: 1,
-        time: "",
-        startTime: "",
-        endTime: ""
+        pageSize: 8
       },
-      loading: false,
       total: 0,
+      loading: false,
       tableData: [],
       multipleSelection: []
     };
@@ -95,12 +97,13 @@ export default {
     list() {
       this.loading = true;
       this.axios
-        .get("/admin/adminLog/list", {
+        .get("/admin/closeLine/list", {
           params: {
-            adminId: this.search.adminId,
-            startTime: this.search.startTime,
-            endTime: this.search.endTime,
-            pageNumber: this.search.pageNumber
+            uId: this.search.uId,
+            qVal: this.search.qVal,
+            closeLine: this.search.closeLine,
+            pageNumber: this.search.pageNumber,
+            pageSize: this.search.pageSize
           }
         })
         .then(data => {
@@ -127,26 +130,16 @@ export default {
       this.search.pageNumber = 1;
       this.list();
     },
-    pickerChage() {
-      let pick = this.search.time;
-      if (pick) {
-        this.search.startTime = moment(pick[0]).format("YYYY-MM-DD");
-        this.search.endTime = moment(pick[1]).format("YYYY-MM-DD");
-      } else {
-        this.search.startTime = "";
-        this.search.endTime = "";
-      }
-    },
-    currentChange(cur) {
-      this.search.pageNumber = cur;
-      this.list();
-    },
     dateFormat(row, column) {
       var date = row[column.property];
       if (date == undefined) {
         return "";
       }
       return moment(date).format("YYYY-MM-DD HH:mm:ss");
+    },
+    currentChange(cur) {
+      this.search.pageNumber = cur;
+      this.list();
     }
   },
   created() {
@@ -155,10 +148,3 @@ export default {
 };
 </script>
 
-<style>
-.chaozuobut {
-  text-align: right;
-  margin-bottom: -12px;
-  margin-right: 20px;
-}
-</style>

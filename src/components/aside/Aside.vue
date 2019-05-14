@@ -76,7 +76,7 @@ export default {
           name: "风险管理",
           path: "",
           icon: "el-icon-s-finance",
-          childs: [{ id: 61, name: "风险率列表", path: "/" }]
+          childs: [{ id: 61, name: "风险率列表", path: "/closelinelist" }]
         },
         {
           id: 7,
@@ -84,19 +84,50 @@ export default {
           path: "",
           icon: "el-icon-s-finance",
           childs: [
-            { id: 71, name: "股票列表", path: "/" },
-            { id: 72, name: "交易时间", path: "/" }
+            { id: 71, name: "股票列表", path: "/stocklist" },
+            { id: 72, name: "交易时间", path: "/tradetimelist" }
           ]
         },
         {
           id: 8,
+          name: "财务管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [
+            { id: 81, name: "充值/提现列表", path: "/rechargelist" }
+            // { id: 82, name: "提现列表", path: "/withdrawallist" }
+          ]
+        },
+        {
+          id: 9,
+          name: "公司管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [{ id: 91, name: "公司列表", path: "/companylist" }]
+        },
+        {
+          id: 10,
           name: "管理员管理",
           path: "",
           icon: "el-icon-s-finance",
           childs: [
-            { id: 81, name: "管理员列表", path: "/adminlist" },
-            { id: 82, name: "操作日志列表", path: "/adminloglist" }
+            { id: 101, name: "管理员列表", path: "/adminlist" },
+            { id: 102, name: "操作日志列表", path: "/adminloglist" }
           ]
+        },
+        {
+          id: 11,
+          name: "app版本管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [{ id: 111, name: "app版本列表", path: "/appversionlist" }]
+        },
+        {
+          id: 12,
+          name: "系统管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [{ id: 121, name: "系统参数列表", path: "/systemlist" }]
         }
       ]
     };

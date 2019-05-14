@@ -1,32 +1,43 @@
 <template>
-  <el-row>
-    <el-col :span="1" class="logo">
-      <img src="../../assets/logo4.png">
-    </el-col>
-    <el-col :span="8" class="biaoti">机构专用版管理系统</el-col>
-    <el-col :span="8" class="userinfo">
-      <el-dropdown trigger="hover">
-        <span class="el-dropdown-link userinfo-inner">
-          <img src="../../assets/user.png">
-          {{adminName}}
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>我的消息</el-dropdown-item>
-          <el-dropdown-item>设置</el-dropdown-item>
-          <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </el-col>
-  </el-row>
+  <div>
+    <el-row>
+      <el-col :span="1" class="logo">
+        <img src="../../assets/logo4.png">
+      </el-col>
+      <el-col :span="8" class="biaoti">机构专用版管理系统</el-col>
+      <el-col :span="8" class="userinfo">
+        <el-dropdown trigger="hover">
+          <span class="el-dropdown-link userinfo-inner">
+            <img src="../../assets/user.png">
+            {{adminName}}
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>我的消息</el-dropdown-item>
+            <el-dropdown-item @click.native="pwdModify">密码修改</el-dropdown-item>
+            <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-col>
+    </el-row>
+    <Edit v-if="this.edit" v-on:childEvent="listenEditChild"></Edit>
+  </div>
 </template>
 
 <script>
 import cookies from "js-cookie";
+import Edit from "./PwdEdit";
 export default {
+  components: { Edit },
   data() {
-    return { adminName: "" };
+    return {
+      adminName: "",
+      edit: false
+    };
   },
   methods: {
+    pwdModify() {
+      this.edit = true;
+    },
     logout() {
       this.$confirm("确认退出吗?", "提示", {
         type: "warning"
@@ -37,6 +48,9 @@ export default {
           this.$router.push("/login");
         })
         .catch(() => {});
+    },
+    listenEditChild(data) {
+      this.edit = false;
     }
   },
   mounted() {
