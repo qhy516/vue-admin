@@ -51,10 +51,10 @@
           width="200"
           align="center"
         ></el-table-column>
-        <el-table-column prop="realName" label="姓名" width="180" align="center"></el-table-column>
-        <el-table-column prop="phone" label="手机号" width="180" align="center"></el-table-column>
-        <el-table-column prop="companyName" label="所属公司" width="180" align="center"></el-table-column>
-        <el-table-column prop="closeLine" label="风险率(亏损百分之)" width="180" align="center">
+        <el-table-column prop="realName" label="姓名" width="190" align="center"></el-table-column>
+        <el-table-column prop="phone" label="手机号" width="190" align="center"></el-table-column>
+        <el-table-column prop="companyName" label="所属公司" width="190" align="center"></el-table-column>
+        <el-table-column prop="closeLine" label="风险率(亏损百分之)" width="190" align="center">
           <template slot-scope="scope">
             <el-tag type="danger">{{scope.row.closeLine*100}}%</el-tag>
           </template>

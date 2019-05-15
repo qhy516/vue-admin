@@ -91,7 +91,7 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="userId" label="用户#" width="60"></el-table-column>
+        <el-table-column prop="userId" label="用户#" width="80"></el-table-column>
         <el-table-column
           prop="createTime"
           label="计费日期"
@@ -151,10 +151,9 @@ export default {
       if (pick) {
         this.search.startTime = moment(pick[0]).format("YYYY-MM-DD");
         this.search.endTime = moment(pick[1]).format("YYYY-MM-DD");
-      }else{
-        this.search.startTime="";
-        this.search.endTime="";
-
+      } else {
+        this.search.startTime = "";
+        this.search.endTime = "";
       }
     },
     companyList() {

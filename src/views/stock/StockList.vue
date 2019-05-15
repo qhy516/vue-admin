@@ -99,11 +99,13 @@
         @current-change="currentChange"
       ></el-pagination>
     </el-card>
-    <Edit
-      v-if="this.edit"
-      v-bind:stock="this.multipleSelection[0]"
-      v-on:childEvent="listenEditChild"
-    ></Edit>
+    <transition name="el-zoom-in-center">
+      <Edit
+        v-if="this.edit"
+        v-bind:stock="this.multipleSelection[0]"
+        v-on:childEvent="listenEditChild"
+      ></Edit>
+    </transition>
   </div>
 </template>
 

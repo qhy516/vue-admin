@@ -128,6 +128,33 @@ export default {
           path: "",
           icon: "el-icon-s-finance",
           childs: [{ id: 121, name: "系统参数列表", path: "/systemlist" }]
+        },
+        {
+          id: 13,
+          name: "文章管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [
+            { id: 131, name: "文章分类列表", path: "/articleclassifylist" },
+            { id: 132, name: "文章列表", path: "/articlelist" }
+          ]
+        },
+        {
+          id: 14,
+          name: "银行管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [
+            { id: 141, name: "银行列表", path: "/banklist" },
+            { id: 142, name: "银行卡列表", path: "/bankcardlist" }
+          ]
+        },
+        {
+          id: 15,
+          name: "支付方式管理",
+          path: "",
+          icon: "el-icon-s-finance",
+          childs: [{ id: 151, name: "支付方式列表", path: "/paymentlist" }]
         }
       ]
     };

@@ -18,6 +18,11 @@ import AdminList from "../views/admin/AdminList.vue";
 import AdminLogList from "../views/adminLog/AdminLogList.vue";
 import AppVersionList from "../views/appVersion/AppVersionList.vue";
 import SystemList from "../views/system/SystemList.vue";
+import ArticleClassifyList from "../views/article/ArticleClassifyList.vue";
+import ArticleList from "../views/article/ArticleList.vue";
+import BankList from "../views/bank/BankList.vue";
+import BankCardList from "../views/bank/BankCardList.vue";
+import PaymentList from "../views/payment/PaymentList.vue";
 
 
 let routes = [{
@@ -120,6 +125,31 @@ let routes = [{
                 path: '/systemlist',
                 component: SystemList,
                 name: '系统参数列表'
+            },
+            {
+                path: '/articlelist',
+                component: ArticleList,
+                name: '文章列表'
+            },
+            {
+                path: '/articleClassifylist',
+                component: ArticleClassifyList,
+                name: '文章分类列表'
+            },
+            {
+                path: '/banklist',
+                component: BankList,
+                name: '银行列表'
+            },
+            {
+                path: '/bankcardlist',
+                component: BankCardList,
+                name: '银行卡列表'
+            },
+            {
+                path: '/paymentlist',
+                component: PaymentList,
+                name: '支付方式列表'
             },
         ]
     },

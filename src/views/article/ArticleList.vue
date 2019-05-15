@@ -2,8 +2,8 @@
   <div>
     <el-card class="box-card">
       <el-row class="chaozuobut">
-        <el-button type="primary" size="small" @click="tradeTimeAdd">添加</el-button>
-        <el-button type="warning" size="small"></el-button>
+        <el-button type="primary" size="small" @click="articleClassifyAdd">新增</el-button>
+        <el-button type="warning" size="small" @click="articleClassifyEdit">修改</el-button>
         <el-button type="info" size="small"></el-button>
         <el-button type="danger" size="small"></el-button>
       </el-row>
@@ -24,29 +24,18 @@
           prop="createTime"
           label="创建时间"
           :formatter="dateFormat"
-          width="200"
+          width="160"
           align="center"
         ></el-table-column>
-        <el-table-column
-          prop="tradeTime"
-          label="交易时间"
-          :formatter="dateFormat"
-          width="200"
-          align="center"
-        ></el-table-column>
-        <el-table-column prop="type" label="交易状态" width="250" align="center">
+        <el-table-column prop="title" label="标题" width="120" align="center"></el-table-column>
+        <el-table-column prop="des" label="简介" width="120" align="center"></el-table-column>
+        <el-table-column prop="classifyTitle" label="分类" width="120" align="center"></el-table-column>
+        <el-table-column prop="content" label="内容" width="400" align="center">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.type === 0" type="info">可交易</el-tag>
-            <el-tag v-if="scope.row.type === 1" type="danger">不可交易</el-tag>
+            <el-input type="textarea" :rows="1" v-model="scope.row.content"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop="deleted" label="是否删除" width="250" align="center">
-          <template slot-scope="scope">
-            <el-tag v-if="scope.row.deleted === false" type="success">正常</el-tag>
-            <el-tag v-if="scope.row.deleted === true" type="warning">删除</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="180" align="center">
+        <el-table-column label="操作" width="120" align="center">
           <template slot-scope="scope">
             <el-button @click="deleteClick(scope.row)" type="text" size="small">删除</el-button>
           </template>
@@ -65,22 +54,31 @@
     <transition name="el-zoom-in-center">
       <Add v-if="this.add" v-on:childEvent="listenAddChild"></Add>
     </transition>
+    <transition name="el-zoom-in-center">
+      <Edit
+        v-if="this.edit"
+        v-bind:data="this.multipleSelection[0]"
+        v-on:childEvent="listenEditChild"
+      ></Edit>
+    </transition>
   </div>
 </template>
 <script>
-import Add from "./TradeTimeAdd.vue";
+import Add from "./ArticleAdd.vue";
+import Edit from "./ArticleEdit.vue";
 import moment from "moment";
 export default {
-  components: { Add },
+  components: { Add, Edit },
   data() {
     return {
       search: {
         pageNumber: 1,
         pageSize: 8
       },
+      add: false,
+      edit: false,
       total: 0,
       loading: false,
-      add: false,
       tableData: [],
       multipleSelection: []
     };
@@ -92,14 +90,14 @@ export default {
     list() {
       this.loading = true;
       this.axios
-        .get("/admin/stockTradeTime/list", {
+        .get("/admin/article/list", {
           params: {
             pageNumber: this.search.pageNumber
           }
         })
         .then(data => {
           this.loading = false;
-          if (data.data.isSucc == false) {
+          if (data.data.isSucc === false) {
             this.$message({
               message: data.data.message,
               type: "error"
@@ -117,21 +115,14 @@ export default {
           });
         });
     },
-    tradeTimeAdd() {
-      this.add = true;
-    },
     deleteClick(row) {
-      this.$confirm(
-        "确认关闭吗？关闭后该时间段将无法交易，请谨慎操作。",
-        "提示",
-        {
-          type: "warning"
-        }
-      )
+      this.$confirm("确认删除吗？请谨慎操作。", "提示", {
+        type: "warning"
+      })
         .then(() => {
           this.axios
-            .delete("/admin/stockTradeTime/deleted", {
-              params: { tradeTimeId: row.id }
+            .delete("/admin/articleClassify/deleted", {
+              params: { id: row.id }
             })
             .then(data => {
               if (data.data.isSucc == false) {
@@ -150,8 +141,32 @@ export default {
         })
         .catch(() => {});
     },
-    listenAddChild() {
+    onSubmit() {
+      this.search.pageNumber = 1;
+      this.list();
+    },
+    articleClassifyAdd() {
+      this.add = true;
+    },
+    articleClassifyEdit() {
+      if (
+        this.multipleSelection == null ||
+        this.multipleSelection.length !== 1
+      ) {
+        this.$message({
+          message: "我只能操作一条数据",
+          type: "warning"
+        });
+      } else {
+        this.edit = true;
+      }
+    },
+    listenAddChild(data) {
       this.add = false;
+      this.list();
+    },
+    listenEditChild() {
+      this.edit = false;
       this.list();
     },
     dateFormat(row, column) {
@@ -171,4 +186,3 @@ export default {
   }
 };
 </script>
-

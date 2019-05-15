@@ -2,8 +2,8 @@
   <div>
     <el-card class="box-card">
       <el-row class="chaozuobut">
-        <el-button type="primary" size="small" @click="tradeTimeAdd">添加</el-button>
-        <el-button type="warning" size="small"></el-button>
+        <el-button type="primary" size="small" @click="paymentAdd">新增</el-button>
+        <el-button type="warning" size="small" @click="paymentEdit">修改</el-button>
         <el-button type="info" size="small"></el-button>
         <el-button type="danger" size="small"></el-button>
       </el-row>
@@ -19,34 +19,28 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="80"></el-table-column>
+        <el-table-column prop="id" label="#" width="60"></el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
           :formatter="dateFormat"
-          width="200"
+          width="160"
           align="center"
         ></el-table-column>
-        <el-table-column
-          prop="tradeTime"
-          label="交易时间"
-          :formatter="dateFormat"
-          width="200"
-          align="center"
-        ></el-table-column>
-        <el-table-column prop="type" label="交易状态" width="250" align="center">
+        <el-table-column prop="type" label="支付类型" width="120" align="center">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.type === 0" type="info">可交易</el-tag>
-            <el-tag v-if="scope.row.type === 1" type="danger">不可交易</el-tag>
+            <el-tag v-if="scope.row.type === 0" type="info" disable-transitions>支付宝</el-tag>
+            <el-tag v-if="scope.row.type === 1" type="warning" disable-transitions>微信</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="deleted" label="是否删除" width="250" align="center">
+        <el-table-column prop="account" label="账户" width="120" align="center"></el-table-column>
+        <el-table-column prop="accountName" label="账户名" width="120" align="center"></el-table-column>
+        <el-table-column prop="qrCodeUrl" label="二维码" width="380" align="center">
           <template slot-scope="scope">
-            <el-tag v-if="scope.row.deleted === false" type="success">正常</el-tag>
-            <el-tag v-if="scope.row.deleted === true" type="warning">删除</el-tag>
+            <el-input type="textarea" :rows="1" v-model="scope.row.qrCodeUrl"></el-input>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="180" align="center">
+        <el-table-column label="操作" width="200" align="center">
           <template slot-scope="scope">
             <el-button @click="deleteClick(scope.row)" type="text" size="small">删除</el-button>
           </template>
@@ -65,22 +59,31 @@
     <transition name="el-zoom-in-center">
       <Add v-if="this.add" v-on:childEvent="listenAddChild"></Add>
     </transition>
+    <transition name="el-zoom-in-center">
+      <Edit
+        v-if="this.edit"
+        v-bind:data="this.multipleSelection[0]"
+        v-on:childEvent="listenEditChild"
+      ></Edit>
+    </transition>
   </div>
 </template>
 <script>
-import Add from "./TradeTimeAdd.vue";
+import Add from "./PaymentAdd.vue";
+import Edit from "./PaymentEdit.vue";
 import moment from "moment";
 export default {
-  components: { Add },
+  components: { Add, Edit },
   data() {
     return {
       search: {
         pageNumber: 1,
         pageSize: 8
       },
+      add: false,
+      edit: false,
       total: 0,
       loading: false,
-      add: false,
       tableData: [],
       multipleSelection: []
     };
@@ -92,14 +95,14 @@ export default {
     list() {
       this.loading = true;
       this.axios
-        .get("/admin/stockTradeTime/list", {
+        .get("/admin/aliWechatPay/list", {
           params: {
             pageNumber: this.search.pageNumber
           }
         })
         .then(data => {
           this.loading = false;
-          if (data.data.isSucc == false) {
+          if (data.data.isSucc === false) {
             this.$message({
               message: data.data.message,
               type: "error"
@@ -117,21 +120,14 @@ export default {
           });
         });
     },
-    tradeTimeAdd() {
-      this.add = true;
-    },
     deleteClick(row) {
-      this.$confirm(
-        "确认关闭吗？关闭后该时间段将无法交易，请谨慎操作。",
-        "提示",
-        {
-          type: "warning"
-        }
-      )
+      this.$confirm("确认删除吗？请谨慎操作。", "提示", {
+        type: "warning"
+      })
         .then(() => {
           this.axios
-            .delete("/admin/stockTradeTime/deleted", {
-              params: { tradeTimeId: row.id }
+            .delete("/admin/aliWechatPay/deleted", {
+              params: { id: row.id }
             })
             .then(data => {
               if (data.data.isSucc == false) {
@@ -150,8 +146,28 @@ export default {
         })
         .catch(() => {});
     },
-    listenAddChild() {
+    paymentAdd() {
+      this.add = true;
+    },
+    paymentEdit() {
+      if (
+        this.multipleSelection == null ||
+        this.multipleSelection.length !== 1
+      ) {
+        this.$message({
+          message: "我只能操作一条数据",
+          type: "warning"
+        });
+      } else {
+        this.edit = true;
+      }
+    },
+    listenAddChild(data) {
       this.add = false;
+      this.list();
+    },
+    listenEditChild() {
+      this.edit = false;
       this.list();
     },
     dateFormat(row, column) {
@@ -171,4 +187,3 @@ export default {
   }
 };
 </script>
-

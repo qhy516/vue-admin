@@ -25,8 +25,8 @@ Vue.prototype.axios = axios;
 
 // axios默认配置
 axios.defaults.timeout = 10000; // 超时时间
-axios.defaults.baseURL = "http://localhost:9999"; // 默认地址
-
+// axios.defaults.baseURL = "http://localhost:9999"; // 开发环境
+axios.defaults.baseURL = "http://api.stockcash.net"; //测试环境
 // axios请求拦截
 axios.interceptors.request.use(
   config => {

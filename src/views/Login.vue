@@ -50,7 +50,7 @@ export default {
       logining: false,
       butDisabled: false,
       ruleForm2: {
-        name: "admin1",
+        name: "qiuhaoyi2",
         password: "123456",
         verifyCode: ""
       },

@@ -82,7 +82,7 @@ export default {
       show: true,
       butDisabled: false,
       timer: null,
-      formLabelWidth: "200px",
+      formLabelWidth: "160px",
       companys: [],
       visible: true,
       adding: false

@@ -28,7 +28,7 @@ export default {
 /*定义滚动条样式（高宽及背景）*/
 ::-webkit-scrollbar {
   width: 8px; /* 滚动条宽度， width：对应竖滚动条的宽度  height：对应横滚动条的高度*/
-   height: 8px;
+  height: 8px;
   background: #ffffff;
 }
 /*定义滚动条轨道（凹槽）样式*/
@@ -39,7 +39,7 @@ export default {
 /*定义滑块 样式*/
 ::-webkit-scrollbar-thumb {
   border-radius: 3px;
-  height: 100px; /* 滚动条滑块长度 */
+  height: 50%; /* 滚动条滑块长度 */
   background-color: rgb(97, 94, 94);
 }
 .el-header {
@@ -54,7 +54,7 @@ export default {
   color: #333;
   /* text-align: center; */
   /* line-height: 200px; */
-  height: 950px;
+  height: 900px;
 }
 
 .el-main {
@@ -62,6 +62,6 @@ export default {
   color: #333;
   /* text-align: center; */
   /* line-height: 160px; */
-  height: 950px;
+  height: 900px;
 }
 </style>

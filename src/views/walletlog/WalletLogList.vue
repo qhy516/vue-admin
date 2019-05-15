@@ -67,12 +67,12 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="60"></el-table-column>
+        <el-table-column prop="id" label="#" width="80"></el-table-column>
         <el-table-column
           prop="createTime"
           :formatter="dateFormat"
           label="创建时间"
-          width="200"
+          width="180"
           align="center"
         ></el-table-column>
         <el-table-column prop="userName" label="用户账号" width="110" align="center"></el-table-column>

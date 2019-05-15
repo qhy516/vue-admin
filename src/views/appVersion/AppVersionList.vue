@@ -78,7 +78,9 @@
         @current-change="currentChange"
       ></el-pagination>
     </el-card>
-    <Add v-if="this.add" v-on:childEvent="listenAddChild"></Add>
+    <transition name="el-zoom-in-center">
+      <Add v-if="this.add" v-on:childEvent="listenAddChild"></Add>
+    </transition>
   </div>
 </template>
 <script>
