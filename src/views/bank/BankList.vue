@@ -19,7 +19,7 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="80"></el-table-column>
+        <el-table-column prop="id" label="#" width="80" align="center"></el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
@@ -27,7 +27,7 @@
           width="300"
           align="center"
         ></el-table-column>
-        <el-table-column prop="name" label="银行名称" width="500" align="center"></el-table-column>
+        <el-table-column prop="name" label="银行名称" mini-width="500" align="center"></el-table-column>
         <el-table-column label="操作" width="280" align="center">
           <template slot-scope="scope">
             <el-button @click="deleteClick(scope.row)" type="text" size="small">删除</el-button>

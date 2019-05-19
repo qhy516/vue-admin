@@ -19,7 +19,9 @@
         </el-dropdown>
       </el-col>
     </el-row>
-    <Edit v-if="this.edit" v-on:childEvent="listenEditChild"></Edit>
+    <transition name="el-zoom-in-center">
+      <Edit v-if="this.edit" v-on:childEvent="listenEditChild"></Edit>
+    </transition>
   </div>
 </template>
 

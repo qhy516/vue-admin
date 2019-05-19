@@ -27,9 +27,9 @@
           width="200"
           align="center"
         ></el-table-column>
-        <el-table-column prop="name" label="账号" width="180" align="center"></el-table-column>
-        <el-table-column prop="companyName" label="所属公司" width="180" align="center"></el-table-column>
-        <el-table-column prop="phone" label="手机号" width="180" align="center"></el-table-column>
+        <el-table-column prop="name" label="账号" mini-width="180" align="center"></el-table-column>
+        <el-table-column prop="companyName" label="所属公司" mini-width="180" align="center"></el-table-column>
+        <el-table-column prop="phone" label="手机号" mini-width="180" align="center"></el-table-column>
         <el-table-column prop="deleted" label="状态" width="150" align="center">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.deleted === 0" type="info" disable-transitions>正常</el-tag>

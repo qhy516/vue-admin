@@ -19,7 +19,7 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="80"></el-table-column>
+        <el-table-column prop="id" label="#" width="80" align="center"></el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
@@ -27,10 +27,10 @@
           width="160"
           align="center"
         ></el-table-column>
-        <el-table-column prop="title" label="标题" width="120" align="center"></el-table-column>
-        <el-table-column prop="des" label="简介" width="120" align="center"></el-table-column>
-        <el-table-column prop="classifyTitle" label="分类" width="120" align="center"></el-table-column>
-        <el-table-column prop="content" label="内容" width="400" align="center">
+        <el-table-column prop="title" label="标题" width="140" align="center"></el-table-column>
+        <el-table-column prop="des" label="简介" width="140" align="center"></el-table-column>
+        <el-table-column prop="classifyTitle" label="分类" width="140" align="center"></el-table-column>
+        <el-table-column prop="content" label="内容" mini-width="400" align="center">
           <template slot-scope="scope">
             <el-input type="textarea" :rows="1" v-model="scope.row.content"></el-input>
           </template>

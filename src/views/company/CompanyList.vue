@@ -46,7 +46,7 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column fixed prop="id" label="#" width="60"></el-table-column>
+        <el-table-column prop="id" label="#" width="80" align="center"></el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
@@ -54,7 +54,7 @@
           width="300"
           align="center"
         ></el-table-column>
-        <el-table-column prop="name" label="公司名称" width="200" align="center"></el-table-column>
+        <el-table-column prop="name" label="公司名称" mini-width="200" align="center"></el-table-column>
         <el-table-column prop="code" label="机构代码" width="200" align="center"></el-table-column>
         <el-table-column prop="deleted" label="状态" width="200" align="center">
           <template slot-scope="scope">

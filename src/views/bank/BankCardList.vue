@@ -19,7 +19,7 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="80"></el-table-column>
+        <el-table-column prop="id" label="#" width="80" align="center"></el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
@@ -28,7 +28,7 @@
           align="center"
         ></el-table-column>
         <el-table-column prop="bankName" label="银行名称" width="200" align="center"></el-table-column>
-        <el-table-column prop="cardNumber" label="银行卡号" width="200" align="center"></el-table-column>
+        <el-table-column prop="cardNumber" label="银行卡号" mini-width="200" align="center"></el-table-column>
         <el-table-column prop="realName" label="真实姓名" width="200" align="center"></el-table-column>
         <el-table-column label="操作" width="280" align="center">
           <template slot-scope="scope">

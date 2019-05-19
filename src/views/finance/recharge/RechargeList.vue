@@ -27,9 +27,8 @@
             <el-form-item label="充值/提现：" label-width="90px" style="width:102%">
               <el-col :span="22">
                 <el-select class="select" v-model="search.recharge" placeholder="充值/提现">
-                  <el-option label="全部" value></el-option>
-                  <el-option label="充值" value="0"></el-option>
-                  <el-option label="提现" value="1"></el-option>
+                  <el-option label="充值" :value="0"></el-option>
+                  <el-option label="提现" :value="1"></el-option>
                 </el-select>
               </el-col>
             </el-form-item>
@@ -101,7 +100,7 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column fixed prop="userId" label="用户#" width="60"></el-table-column>
+        <el-table-column fixed prop="userId" label="用户#" width="80" align="center"></el-table-column>
         <el-table-column
           fixed
           prop="createTime"
@@ -113,6 +112,12 @@
         <el-table-column prop="phone" label="手机号" width="120" align="center"></el-table-column>
         <el-table-column prop="realName" label="真实姓名" width="120" align="center"></el-table-column>
         <el-table-column prop="companyName" label="所属公司" width="120" align="center"></el-table-column>
+        <el-table-column prop="recharge" label="充值/提现" width="120" align="center">
+          <template slot-scope="scope">
+            <el-tag type="success" v-if="scope.row.recharge===0">充值</el-tag>
+            <el-tag type="info" v-if="scope.row.recharge===1">提现</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="icardNum" label="身份证号" width="180" align="center"></el-table-column>
         <el-table-column prop="tradeSn" label="交易单号" width="220" align="center"></el-table-column>
         <el-table-column prop="amount" label="订单金额" width="120" align="center"></el-table-column>
@@ -171,6 +176,10 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-table :show-header="showHeader" :data="tableSum">
+        <el-table-column class-name="talbleTitle" prop="title" width="120"></el-table-column>
+        <el-table-column prop="sumFee" width="1000"></el-table-column>
+      </el-table>
       <el-pagination
         class="pagination"
         :page-size="this.search.pageSize"
@@ -195,7 +204,7 @@ export default {
         time: "",
         startTime: "",
         endTime: "",
-        recharge: "",
+        recharge: 0,
         payType: "",
         status: "",
         pageNumber: 1,
@@ -221,6 +230,8 @@ export default {
       ],
       total: 0,
       loading: false,
+      showHeader: false,
+      tableSum: [{ title: "", sumFee: "" }],
       tableData: [],
       multipleSelection: []
     };
@@ -265,6 +276,46 @@ export default {
           } else {
             this.tableData = data.data.result.records;
             this.total = data.data.result.total;
+          }
+        })
+        .catch(error => {
+          this.loading = false;
+          this.$message({
+            message: "数据获取失败",
+            type: "error"
+          });
+        });
+      this.querySum();
+    },
+    querySum() {
+      this.axios
+        .get("/admin/rechargeWithdrawOrder/sum", {
+          params: {
+            userId: this.search.userId,
+            phone: this.search.phone,
+            realName: this.search.realName,
+            startTime: this.search.startTime,
+            endTime: this.search.endTime,
+            recharge: this.search.recharge,
+            payType: this.search.payType,
+            status: this.search.status
+          }
+        })
+        .then(data => {
+          this.loading = false;
+          if (data.data.isSucc == false) {
+            this.$message({
+              message: data.data.message,
+              type: "error"
+            });
+          } else {
+            this.tableSum[0].title = "汇总统计：";
+            if (this.search.recharge === 0) {
+              this.tableSum[0].sumFee = "充值共计：" + data.data.result;
+            }
+            if (this.search.recharge === 1) {
+              this.tableSum[0].sumFee = "提现共计：" + data.data.result;
+            }
           }
         })
         .catch(error => {

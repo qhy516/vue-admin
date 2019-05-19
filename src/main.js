@@ -14,19 +14,26 @@ import routes from '../src/routes/Routes'
 // import Mock from './mock'
 // Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
+import cookies from "js-cookie";
+import filters from "./common/js/filters";
+import echarts from 'echarts'
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(axios)
+const router = new VueRouter({
+  routes
+})
 
 //NProgress.configure({ showSpinner: false });
 Vue.prototype.axios = axios;
+Vue.prototype.echarts = echarts;
 
 // axios默认配置
 axios.defaults.timeout = 10000; // 超时时间
-// axios.defaults.baseURL = "http://localhost:9999"; // 开发环境
-axios.defaults.baseURL = "http://api.stockcash.net"; //测试环境
+axios.defaults.baseURL = "http://localhost:9999"; // 开发环境
+// axios.defaults.baseURL = "http://api.stockcash.net"; //测试环境
 // axios请求拦截
 axios.interceptors.request.use(
   config => {
@@ -42,11 +49,28 @@ axios.interceptors.request.use(
   err => {
     return Promise.reject(err);
   });
+// axios返回拦截
+axios.interceptors.response.use(
+  response => {
+    if (response.data.isSucc == false && response.data.code === 5004) {
+      sessionStorage.removeItem("user");
+      cookies.remove("user");
+      router.push({
+        path: '/login'
+      })
+      return response
+    } else {
+      return response;
+    }
+  },
+  err => {
+    return Promise.reject(err);
+  });
 
-const router = new VueRouter({
-  routes
-})
-
+//全局方法Vue.filter()统一注册自定义过滤器
+Object.keys(filters).forEach(key => { //返回filters对象中属性名组成的数组
+  Vue.filter(key, filters[key])
+});
 router.beforeEach((to, from, next) => {
   //NProgress.start();
   if (to.path == '/login') {

@@ -19,19 +19,19 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="80"></el-table-column>
+        <el-table-column prop="id" label="#" width="80" align="center"></el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
           :formatter="dateFormat"
-          width="200"
+          mini-width="200"
           align="center"
         ></el-table-column>
         <el-table-column
           prop="tradeTime"
           label="交易时间"
           :formatter="dateFormat"
-          width="200"
+          mini-width="200"
           align="center"
         ></el-table-column>
         <el-table-column prop="type" label="交易状态" width="250" align="center">

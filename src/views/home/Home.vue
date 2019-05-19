@@ -27,8 +27,8 @@ export default {
 <style>
 /*定义滚动条样式（高宽及背景）*/
 ::-webkit-scrollbar {
-  width: 8px; /* 滚动条宽度， width：对应竖滚动条的宽度  height：对应横滚动条的高度*/
-  height: 8px;
+  width: 6px; /* 滚动条宽度， width：对应竖滚动条的宽度  height：对应横滚动条的高度*/
+  height: 6px;
   background: #ffffff;
 }
 /*定义滚动条轨道（凹槽）样式*/

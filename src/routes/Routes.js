@@ -23,6 +23,10 @@ import ArticleList from "../views/article/ArticleList.vue";
 import BankList from "../views/bank/BankList.vue";
 import BankCardList from "../views/bank/BankCardList.vue";
 import PaymentList from "../views/payment/PaymentList.vue";
+import CapitalList from "../views/report/capital/CapitalList.vue";
+import HoldList from "../views/report/hold/HoldList.vue";
+import FlatList from "../views/report/flat/FlatList.vue";
+import HangUpList from "../views/report/hangUp/HangUpList.vue";
 
 
 let routes = [{
@@ -70,6 +74,26 @@ let routes = [{
                 path: '/feelist',
                 component: FeeList,
                 name: '仓息列表'
+            },
+            {
+                path: '/capitallist',
+                component: CapitalList,
+                name: '资金报表'
+            },
+            {
+                path: '/holdlist',
+                component: HoldList,
+                name: '持仓报表'
+            },
+            {
+                path: '/flatlist',
+                component: FlatList,
+                name: '平仓报表'
+            },
+            {
+                path: '/hanguplist',
+                component: HangUpList,
+                name: '挂单报表'
             },
             {
                 path: '/entrustlist',

@@ -6,14 +6,14 @@
           <el-input v-model="detail.contentKey" :disabled="this.contentDisable"></el-input>
         </el-col>
       </el-form-item>
-      <el-form-item prop="content" label="参数值：" :label-width="formLabelWidth">
-        <el-col :span="16">
-          <el-input v-model="detail.content"></el-input>
-        </el-col>
-      </el-form-item>
       <el-form-item prop="des" label="参数描述：" :label-width="formLabelWidth">
         <el-col :span="16">
           <el-input v-model="detail.des"></el-input>
+        </el-col>
+      </el-form-item>
+      <el-form-item prop="content" label="参数值：" :label-width="formLabelWidth">
+        <el-col :span="16">
+          <el-input type="textarea" :rows="3" v-model="detail.content"></el-input>
         </el-col>
       </el-form-item>
     </el-form>

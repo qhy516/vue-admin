@@ -14,7 +14,7 @@
     <el-form-item prop="password">
       <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
-    <el-form-item prop="verifyCode">
+    <!-- <el-form-item prop="verifyCode">
       <el-row :gutter="20">
         <el-col :span="14">
           <el-input
@@ -31,7 +31,7 @@
           </el-button>
         </el-col>
       </el-row>
-    </el-form-item>
+    </el-form-item> -->
     <el-form-item style="width:100%;">
       <el-button type="primary" style="width:100%;" @click="handleSubmit2" :loading="logining">登录</el-button>
     </el-form-item>
@@ -44,15 +44,14 @@ import cookies from "js-cookie";
 export default {
   data() {
     return {
-      count: 60,
+      // count: 60,
       show: true,
       timer: null,
       logining: false,
       butDisabled: false,
       ruleForm2: {
-        name: "qiuhaoyi2",
+        name: "admin",
         password: "123456",
-        verifyCode: ""
       },
       rules2: {
         name: [
@@ -63,10 +62,6 @@ export default {
           { required: true, message: "请输入密码", trigger: "blur" }
           //{ validator: validaePass2 }
         ],
-        verifyCode: [
-          { required: true, message: "请输入验证码", trigger: "blur" }
-          //{ validator: validaePass2 }
-        ]
       }
     };
   },
@@ -74,48 +69,48 @@ export default {
     handleReset2() {
       this.$refs.ruleForm2.resetFields();
     },
-    send() {
-      let param = new URLSearchParams();
-      param.append("name", this.ruleForm2.name);
-      param.append("password", this.ruleForm2.password);
-      this.axios
-        .post("/admin/user/getVerifyCode", param)
-        .then(data => {
-          if (data.data.isSucc == false) {
-            this.$message({
-              message: data.data.message,
-              type: "error"
-            });
-          } else {
-            this.$message({
-              message: "验证码发送成功",
-              type: "success"
-            });
-            if (!this.timer) {
-              this.count = 60;
-              this.show = false;
-              this.butDisabled = true;
-              this.timer = setInterval(() => {
-                if (this.count > 0 && this.count <= 60) {
-                  this.count--;
-                } else {
-                  this.show = true;
-                  this.butDisabled = false;
-                  clearInterval(this.timer); // 清除定时器
-                  this.timer = null;
-                }
-              }, 1000);
-            }
-          }
-        })
-        .catch(error => {
-          console.log(error);
-          this.$message({
-            message: "验证码发送失败",
-            type: "error"
-          });
-        });
-    },
+    // send() {
+    //   let param = new URLSearchParams();
+    //   param.append("name", this.ruleForm2.name);
+    //   param.append("password", this.ruleForm2.password);
+    //   this.axios
+    //     .post("/admin/user/getVerifyCode", param)
+    //     .then(data => {
+    //       if (data.data.isSucc == false) {
+    //         this.$message({
+    //           message: data.data.message,
+    //           type: "error"
+    //         });
+    //       } else {
+    //         this.$message({
+    //           message: "验证码发送成功",
+    //           type: "success"
+    //         });
+    //         if (!this.timer) {
+    //           this.count = 60;
+    //           this.show = false;
+    //           this.butDisabled = true;
+    //           this.timer = setInterval(() => {
+    //             if (this.count > 0 && this.count <= 60) {
+    //               this.count--;
+    //             } else {
+    //               this.show = true;
+    //               this.butDisabled = false;
+    //               clearInterval(this.timer); // 清除定时器
+    //               this.timer = null;
+    //             }
+    //           }, 1000);
+    //         }
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.log(error);
+    //       this.$message({
+    //         message: "验证码发送失败",
+    //         type: "error"
+    //       });
+    //     });
+    // },
     handleSubmit2(ev) {
       this.$refs.ruleForm2.validate(valid => {
         if (valid) {
@@ -123,7 +118,6 @@ export default {
           let param = new URLSearchParams();
           param.append("name", this.ruleForm2.name);
           param.append("password", md5(this.ruleForm2.password));
-          param.append("verifyCode", this.ruleForm2.verifyCode);
           this.axios.post("/admin/user/login", param).then(data => {
             this.logining = false;
             if (data.data.isSucc == false) {

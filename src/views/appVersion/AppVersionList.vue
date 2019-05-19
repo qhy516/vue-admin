@@ -41,7 +41,6 @@
         <el-table-column type="selection" width="55"></el-table-column>
         <el-table-column prop="id" label="#" width="60"></el-table-column>
         <el-table-column
-          fixed
           prop="createTime"
           label="创建时间"
           :formatter="dateFormat"
@@ -61,8 +60,8 @@
             <el-tag v-if="scope.row.forceUpdate === 1" type="warning" disable-transitions>强制更新</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="url" label="安装包链接" width="270" align="center"></el-table-column>
-        <el-table-column prop="des" label="描述" width="280" align="center">
+        <el-table-column prop="url" label="安装包链接" mini-width="270" align="center"></el-table-column>
+        <el-table-column prop="des" label="描述" mini-width="280" align="center">
           <template slot-scope="scope">
             <el-input type="textarea" :rows="1" v-model="scope.row.des"></el-input>
           </template>

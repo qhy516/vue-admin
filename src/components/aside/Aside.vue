@@ -58,10 +58,10 @@ export default {
           path: "",
           icon: "el-icon-s-finance",
           childs: [
-            { id: 41, name: "资金报表", path: "/" },
-            { id: 42, name: "持仓报表", path: "/" },
-            { id: 43, name: "平仓报表", path: "/" },
-            { id: 44, name: "挂单报表", path: "/" }
+            { id: 41, name: "资金报表", path: "/capitallist" },
+            { id: 42, name: "持仓报表", path: "/holdlist" },
+            { id: 43, name: "平仓报表", path: "/flatlist" },
+            { id: 44, name: "挂单报表", path: "/hanguplist" }
           ]
         },
         {

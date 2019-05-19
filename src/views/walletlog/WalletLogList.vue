@@ -67,16 +67,16 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="80"></el-table-column>
+        <el-table-column prop="id" label="#" width="80" align="center"></el-table-column>
         <el-table-column
           prop="createTime"
           :formatter="dateFormat"
           label="创建时间"
-          width="180"
+         width="180"
           align="center"
         ></el-table-column>
         <el-table-column prop="userName" label="用户账号" width="110" align="center"></el-table-column>
-        <el-table-column prop="companyName" label="所属公司" width="110" align="center"></el-table-column>
+        <el-table-column prop="companyName" label="所属公司" width="120" align="center"></el-table-column>
         <el-table-column prop="type" label="钱包类型" width="150" align="center">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.type===0">人民币买单</el-tag>
@@ -93,7 +93,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="money" label="金额" width="110" align="center"></el-table-column>
-        <el-table-column prop="des" label="描述" width="420" align="center">
+        <el-table-column prop="des" label="描述" mini-width="420" align="center">
           <template slot-scope="scope">
             <el-input type="textarea" :rows="1" v-model="scope.row.des"></el-input>
           </template>

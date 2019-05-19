@@ -43,7 +43,7 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column fixed prop="userId" label="用户#" width="60"></el-table-column>
+        <el-table-column fixed prop="userId" label="用户#" width="80" align="center"></el-table-column>
         <el-table-column fixed prop="userName" label="用户账号" width="110" align="center"></el-table-column>
         <el-table-column prop="realName" label="用户姓名" width="110" align="center"></el-table-column>
         <el-table-column prop="phone" label="手机号" width="110" align="center"></el-table-column>

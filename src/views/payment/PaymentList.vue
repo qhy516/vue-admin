@@ -19,7 +19,7 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="60"></el-table-column>
+        <el-table-column prop="id" label="#" width="80" align="center"></el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
@@ -35,7 +35,7 @@
         </el-table-column>
         <el-table-column prop="account" label="账户" width="120" align="center"></el-table-column>
         <el-table-column prop="accountName" label="账户名" width="120" align="center"></el-table-column>
-        <el-table-column prop="qrCodeUrl" label="二维码" width="380" align="center">
+        <el-table-column prop="qrCodeUrl" label="二维码" mini-width="380" align="center">
           <template slot-scope="scope">
             <el-input type="textarea" :rows="1" v-model="scope.row.qrCodeUrl"></el-input>
           </template>

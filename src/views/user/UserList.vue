@@ -42,26 +42,26 @@
         @selection-change="handleSelectionChange"
         style="width: 100%"
       >
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="60"></el-table-column>
+        <el-table-column type="selection" width="50"></el-table-column>
+        <el-table-column prop="id" label="#" width="80" align="center"></el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
           :formatter="dateFormat"
-          width="200"
+          mini-width="200"
           align="center"
         ></el-table-column>
-        <el-table-column prop="companyName" label="所属公司" width="120" align="center"></el-table-column>
+        <el-table-column prop="companyName" label="所属公司" mini-width="120" align="center"></el-table-column>
         <el-table-column prop="realName" label="真实姓名" width="120" align="center"></el-table-column>
-        <el-table-column prop="phone" label="手机号" width="180" align="center"></el-table-column>
-        <el-table-column prop="icardNum" label="身份证号" width="180" align="center"></el-table-column>
-        <el-table-column prop="deleted" label="状态" width="150" align="center">
+        <el-table-column prop="phone" label="手机号" width="120" align="center"></el-table-column>
+        <el-table-column prop="icardNum" label="身份证号" width="220" align="center"></el-table-column>
+        <el-table-column prop="deleted" label="状态" width="120" align="center">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.deleted === 0" type="info" disable-transitions>正常</el-tag>
             <el-tag v-if="scope.row.deleted === 1" type="danger" disable-transitions>禁用</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="150" align="center">
+        <el-table-column label="操作" mini-width="160" align="center">
           <template slot-scope="scope">
             <el-button
               v-if="scope.row.deleted===0"

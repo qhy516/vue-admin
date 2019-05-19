@@ -33,14 +33,15 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="60"></el-table-column>
-        <el-table-column prop="contentKey" label="KEY" width="320" align="center"></el-table-column>
-        <el-table-column prop="content" label="VALUE" width="340" align="center">
+        <el-table-column prop="id" label="#" width="80" align="center"></el-table-column>
+        <el-table-column prop="contentKey" label="KEY" mini-width="320" align="center"></el-table-column>
+        <el-table-column prop="des" label="参数描述" mini-width="320" align="center"></el-table-column>
+        <el-table-column prop="content" label="VALUE" mini-width="340" align="center">
           <template slot-scope="scope">
             <el-input type="textarea" :rows="1" v-model="scope.row.content"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop="des" label="参数描述" width="320" align="center"></el-table-column>
+
         <el-table-column prop="deleted" label="状态" width="120" align="center">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.deleted === false" type="info" disable-transitions>正常</el-tag>

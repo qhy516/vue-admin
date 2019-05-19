@@ -19,7 +19,7 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="id" label="#" width="80"></el-table-column>
+        <el-table-column prop="id" label="#" width="80" align="center"></el-table-column>
         <el-table-column
           prop="createTime"
           label="创建时间"
@@ -27,13 +27,7 @@
           width="200"
           align="center"
         ></el-table-column>
-        <el-table-column prop="title" label="标题" width="600" align="center"></el-table-column>
-        <!-- <el-table-column prop="deleted" label="状态" width="200" align="center">
-          <template slot-scope="scope">
-            <el-tag v-if="scope.row.deleted === false" type="success" disable-transitions>正常</el-tag>
-            <el-tag v-if="scope.row.deleted === true" type="warning" disable-transitions>关闭</el-tag>
-          </template>
-        </el-table-column>-->
+        <el-table-column prop="title" label="标题" mini-width="600" align="center"></el-table-column>
         <el-table-column label="操作" width="280" align="center">
           <template slot-scope="scope">
             <el-button @click="deleteClick(scope.row)" type="text" size="small">删除</el-button>

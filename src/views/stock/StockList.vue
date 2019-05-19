@@ -61,7 +61,7 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column fixed prop="id" label="#" width="100"></el-table-column>
+        <el-table-column fixed prop="id" label="#" width="100" align="center"></el-table-column>
         <el-table-column fixed prop="symbol" label="股票代码" width="100" align="center"></el-table-column>
         <el-table-column prop="name" label="股票名字" width="100" align="center"></el-table-column>
         <el-table-column prop="amount" label="成交额" width="100" align="center"></el-table-column>

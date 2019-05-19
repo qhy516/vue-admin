@@ -35,7 +35,7 @@
           <el-col :span="6">
             <el-form-item label="买卖类型：" label-width="90px" style="width:102%">
               <el-col :span="22">
-                <el-select class="select" v-model="search.statistics" placeholder="买卖类型">
+                <el-select class="select" v-model="search.recharge" placeholder="买卖类型">
                   <el-option label="全部" value></el-option>
                   <el-option label="买进" value="0"></el-option>
                   <el-option label="卖出" value="1"></el-option>
@@ -46,7 +46,7 @@
           <el-col :span="6">
             <el-form-item label="融资/融券：" label-width="90px" style="width:102%">
               <el-col :span="22">
-                <el-select class="select" v-model="search.statistics" placeholder="资券类型">
+                <el-select class="select" v-model="search.isMargin" placeholder="资券类型">
                   <el-option label="全部" value></el-option>
                   <el-option label="融资" value="0"></el-option>
                   <el-option label="融券" value="1"></el-option>
@@ -101,7 +101,7 @@
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column fixed prop="userId" label="用户#" width="60"></el-table-column>
+        <el-table-column fixed prop="userId" label="用户#" width="80" align="center"></el-table-column>
         <el-table-column fixed prop="realName" label="姓名" width="100" align="center"></el-table-column>
         <el-table-column
           prop="createTime"
@@ -149,6 +149,13 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-table :show-header="showHeader" :data="tableSum">
+        <el-table-column class-name="talbleTitle" prop="title" width="120"></el-table-column>
+        <el-table-column prop="amount" width="200"></el-table-column>
+        <el-table-column prop="fee" width="200"></el-table-column>
+        <el-table-column prop="yinhuasui" width="200"></el-table-column>
+        <el-table-column prop="profitLoss" width="200"></el-table-column>
+      </el-table>
       <el-pagination
         class="pagination"
         :page-size="this.search.pageSize"
@@ -194,6 +201,10 @@ export default {
       shaixuanVisible: false,
       loading: false,
       detail: false,
+      showHeader: false,
+      tableSum: [
+        { title: "", amount: "", fee: "", profitLoss: "", yinhuasui: "" }
+      ],
       tableData: [],
       total: 0
     };
@@ -249,6 +260,47 @@ export default {
             type: "error"
           });
         });
+      this.querySum();
+    },
+    querySum() {
+      this.axios
+        .get("/admin/entrust/listSum", {
+          params: {
+            uId: this.search.uId,
+            phone: this.search.phone,
+            symbol: this.search.symbol,
+            realName: this.search.realName,
+            batchId: this.search.batchId,
+            recharge: this.search.recharge,
+            isMargin: this.search.isMargin,
+            startTime: this.search.startTime,
+            endTime: this.search.endTime
+          }
+        })
+        .then(data => {
+          this.loading = false;
+          if (data.data.isSucc == false) {
+            this.$message({
+              message: data.data.message,
+              type: "error"
+            });
+          } else {
+            this.tableSum[0].title = "汇总统计：";
+            this.tableSum[0].amount = "总委托金额:" + data.data.result.amount;
+            this.tableSum[0].fee = "总收手续费:" + data.data.result.fee;
+            this.tableSum[0].yinhuasui =
+              "总收印花税:" + data.data.result.yinhuasui;
+            this.tableSum[0].profitLoss =
+              "总成交盈亏:" + data.data.result.profitLoss;
+          }
+        })
+        .catch(error => {
+          this.loading = false;
+          this.$message({
+            message: "统计项数据获取失败",
+            type: "error"
+          });
+        });
     },
     onSubmit() {
       this.search.pageNumber = 1;
@@ -297,6 +349,10 @@ export default {
 };
 </script>
 <style>
+.talbleTitle {
+  font-family: PingFang SC;
+  font-size: 17px;
+}
 .chaozuobut {
   text-align: right;
   margin-bottom: -12px;

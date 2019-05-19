@@ -8,30 +8,15 @@
               <el-input
                 class="forminput"
                 size="small"
-                v-model="search.qValUser"
-                placeholder="用户账户/真实姓名"
+                v-model="search.searchKeys"
+                placeholder="交易账号/姓名"
               ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="条件搜索：" label-width="90px">
-              <el-input
-                class="forminput"
-                size="small"
-                v-model="search.qValStock"
-                placeholder="股票代码/股票名称"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="用户ID：" label-width="90px">
-              <el-input class="forminput" size="small" v-model="search.uId" placeholder="用户ID"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="所属公司：" label-width="90px" style="width:102%">
               <el-col :span="22">
-                <el-select class="select" v-model="search.cId" placeholder="所属公司">
+                <el-select class="select" v-model="search.cid" placeholder="所属公司">
                   <el-option label="全部" value></el-option>
                   <el-option
                     v-for="item in companys"
@@ -39,21 +24,6 @@
                     :label="item.name"
                     :value="item.id"
                   ></el-option>
-                </el-select>
-              </el-col>
-            </el-form-item>
-          </el-col>
-        </el-form>
-      </el-row>
-      <el-row>
-        <el-form :inline="true" :model="search" class="demo-form-inline">
-          <el-col :span="6">
-            <el-form-item label="统计状态：" label-width="90px" style="width:102%">
-              <el-col :span="22">
-                <el-select class="select" v-model="search.statistics" placeholder="统计状态">
-                  <el-option label="全部" value></el-option>
-                  <el-option label="未统计" value="0"></el-option>
-                  <el-option label="已统计" value="1"></el-option>
                 </el-select>
               </el-col>
             </el-form-item>
@@ -75,9 +45,9 @@
       </el-row>
       <el-row class="chaozuobut">
         <el-button type="primary" size="small" @click="onSubmit">查询</el-button>
-        <el-button type="warning" size="small" @click="add"></el-button>
-        <el-button type="info" size="small" @click="update"></el-button>
-        <el-button type="danger" size="small" @click="rrole"></el-button>
+        <el-button type="warning" size="small" @click="capitalExport">导出</el-button>
+        <el-button type="info" size="small">详情</el-button>
+        <el-button type="danger" size="small"></el-button>
       </el-row>
     </el-card>
     <el-card>
@@ -90,27 +60,26 @@
         @selection-change="handleSelectionChange"
         style="width: 100%"
       >
-        <el-table-column type="selection" width="60"></el-table-column>
-        <el-table-column prop="userId" label="用户#" width="80" align="center"></el-table-column>
-        <el-table-column
-          prop="createTime"
-          label="计费日期"
-          :formatter="dateFormat"
-          width="120"
-          align="center"
-        ></el-table-column>
-        <el-table-column prop="userName" label="账户" width="120" align="center"></el-table-column>
-        <el-table-column prop="realName" label="姓名" width="120" align="center"></el-table-column>
+        <el-table-column type="selection" width="50"></el-table-column>
+        <el-table-column fixed prop="id" label="用户#" mini-width="60" align="center"></el-table-column>
+        <el-table-column prop="phone" label="用户账户" mini-width="120" align="center"></el-table-column>
+        <el-table-column prop="realName" label="真实姓名" mini-width="120" align="center"></el-table-column>
         <el-table-column prop="companyName" label="所属公司" mini-width="120" align="center"></el-table-column>
-        <el-table-column prop="stockName" label="股票名字" mini-width="120" align="center"></el-table-column>
-        <el-table-column prop="averagePrice" label="成本价" width="120" align="center"></el-table-column>
-        <el-table-column prop="count" label="股数" width="120" align="center"></el-table-column>
-        <el-table-column prop="amount" label="总成本" width="120" align="center"></el-table-column>
-        <el-table-column prop="fee" label="仓息" width="120" align="center"></el-table-column>
+        <el-table-column prop="usedMoney" label="账户余额" mini-width="115" align="center"></el-table-column>
+        <el-table-column prop="yinkui" label="盈亏" mini-width="115" align="center"></el-table-column>
+        <el-table-column prop="capital" label="本金" mini-width="115" align="center"></el-table-column>
+        <el-table-column prop="closeLine" label="危险率" mini-width="115" align="center">
+          <template slot-scope="scope">
+            <el-tag type="warning" disable-transitions>{{scope.row.closeLine*100|toFixed(0)}}%</el-tag>
+          </template>
+        </el-table-column>
       </el-table>
       <el-table :show-header="showHeader" :data="tableSum">
         <el-table-column class-name="talbleTitle" prop="title" width="120"></el-table-column>
-        <el-table-column prop="sumFee" width="1000"></el-table-column>
+        <el-table-column prop="usedMoney" width="180"></el-table-column>
+        <el-table-column prop="counts" width="180"></el-table-column>
+        <el-table-column prop="yinkui" width="180"></el-table-column>
+        <el-table-column prop="capital" width="200"></el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
@@ -130,22 +99,26 @@ export default {
   data() {
     return {
       search: {
-        uId: "",
-        cId: "",
-        qValUser: "",
-        qValStock: "",
-        statistics: "",
+        searchKeys: "",
+        cid: "",
         time: "",
         startTime: "",
         endTime: "",
         pageNumber: 1,
         pageSize: 8
       },
-      showHeader: false,
-      tableData: [],
-      tableSum: [{ title: "", sumFee: "" }],
+      user: null,
+      companys: [],
+      add: false,
+      edit: false,
+      total: 0,
       loading: false,
-      total: 0
+      showHeader: false,
+      tableSum: [
+        { title: "", capital: "", counts: "", usedMoney: "", yinkui: "" }
+      ],
+      tableData: [],
+      multipleSelection: []
     };
   },
   methods: {
@@ -177,22 +150,19 @@ export default {
     list() {
       this.loading = true;
       this.axios
-        .get("/admin/wallet/feeList", {
+        .get("/admin/entrust/holdList", {
           params: {
-            uId: this.search.uId,
-            cId: this.search.cId,
-            qValUser: this.search.qValUser,
-            qValStock: this.search.qValStock,
+            searchKeys: this.search.searchKeys,
+            cid: this.search.cid,
             startTime: this.search.startTime,
             endTime: this.search.endTime,
-            statistics: this.search.statistics,
             pageNumber: this.search.pageNumber,
             pageSize: this.search.pageSize
           }
         })
         .then(data => {
           this.loading = false;
-          if (data.data.isSucc == false) {
+          if (data.data.isSucc === false) {
             this.$message({
               message: data.data.message,
               type: "error"
@@ -212,35 +182,36 @@ export default {
       this.querySum();
     },
     querySum() {
-      this.loading = true;
       this.axios
-        .get("/admin/wallet/querySumFee", {
+        .get("/admin/entrust/holdListSum", {
           params: {
-            uId: this.search.uId,
-            cId: this.search.cId,
-            qValUser: this.search.qValUser,
-            qValStock: this.search.qValStock,
+            searchKeys: this.search.searchKeys,
+            cid: this.search.cid,
             startTime: this.search.startTime,
-            endTime: this.search.endTime,
-            statistics: this.search.statistics
+            endTime: this.search.endTime
           }
         })
         .then(data => {
           this.loading = false;
-          if (data.data.isSucc == false) {
+          if (data.data.isSucc === false) {
             this.$message({
               message: data.data.message,
               type: "error"
             });
           } else {
             this.tableSum[0].title = "汇总统计：";
-            this.tableSum[0].sumFee = "累计仓息:" + data.data.result.sumFee;
+            this.tableSum[0].capital =
+              "总的自有本金：" + data.data.result.capital;
+            this.tableSum[0].counts = "总持仓股数：" + data.data.result.counts;
+            this.tableSum[0].usedMoney =
+              "账户余额：" + data.data.result.usedMoney;
+            this.tableSum[0].yinkui = "总盈亏：" + data.data.result.yinkui;
           }
         })
         .catch(error => {
           this.loading = false;
           this.$message({
-            message: "统计项数据获取失败",
+            message: "数据获取失败",
             type: "error"
           });
         });
@@ -249,12 +220,59 @@ export default {
       this.search.pageNumber = 1;
       this.list();
     },
-    dateFormat(row, column) {
-      var date = row[column.property];
-      if (date == undefined) {
-        return "";
+    capitalExport() {
+      this.axios
+        .get("/admin/excel/walletListExport", {
+          params: {
+            searchKeys: this.search.searchKeys,
+            companyId: this.user.companyId,
+            level: this.user.level,
+            token: this.user.token,
+            userId: this.user.id
+          }
+        })
+        .then(data => {
+          this.loading = false;
+          if (data.data.isSucc === false) {
+            this.$message({
+              message: data.data.message,
+              type: "error"
+            });
+          } else {
+            this.$message({
+              message: "操作成功",
+              type: "success"
+            });
+          }
+        })
+        .catch(error => {
+          this.loading = false;
+          this.$message({
+            message: "资金报表导出失败",
+            type: "error"
+          });
+        });
+    },
+    companyEdit() {
+      if (
+        this.multipleSelection == null ||
+        this.multipleSelection.length !== 1
+      ) {
+        this.$message({
+          message: "我只能操作一条数据",
+          type: "warning"
+        });
+      } else {
+        this.edit = true;
       }
-      return moment(date).format("YYYY-MM-DD");
+    },
+    listenAddChild(data) {
+      this.add = false;
+      this.list();
+    },
+    listenEditChild(data) {
+      this.edit = false;
+      this.list();
     },
     currentChange(cur) {
       this.search.pageNumber = cur;
@@ -264,20 +282,8 @@ export default {
   created() {
     this.list();
     this.companyList();
+    this.user = JSON.parse(sessionStorage.getItem("user"));
   }
 };
 </script>
-<style>
-.talbleTitle {
-  font-family: PingFang SC;
-  font-size: 17px;
-}
-.select {
-  width: 100%;
-}
-.picker {
-  margin-top: 4px;
-}
-</style>
-
 

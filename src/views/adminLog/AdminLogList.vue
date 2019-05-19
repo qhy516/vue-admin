@@ -51,8 +51,8 @@
         ></el-table-column>
         <el-table-column prop="adminName" label="管理员账户" width="120" align="center"></el-table-column>
         <el-table-column prop="des" label="操作描述" width="160" align="center"></el-table-column>
-        <el-table-column prop="url" label="操作地址" width="280" align="center"></el-table-column>
-        <el-table-column prop="content" label="操作内容" width="390" align="center">
+        <el-table-column prop="url" label="操作地址" mini-width="280" align="center"></el-table-column>
+        <el-table-column prop="content" label="操作内容" mini-width="390" align="center">
           <template slot-scope="scope">
             <el-input type="textarea" :rows="1" v-model="scope.row.content"></el-input>
           </template>
