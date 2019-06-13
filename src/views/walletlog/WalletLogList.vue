@@ -63,7 +63,6 @@
         element-loading-spinner="el-icon-loading"
         element-loading-background="rgba(230,230,250, 0.8)"
         :data="tableData"
-        @selection-change="handleSelectionChange"
         style="width: 100%"
       >
         <el-table-column type="selection" width="55"></el-table-column>
@@ -72,7 +71,7 @@
           prop="createTime"
           :formatter="dateFormat"
           label="创建时间"
-         width="180"
+          width="180"
           align="center"
         ></el-table-column>
         <el-table-column prop="userName" label="用户账号" width="110" align="center"></el-table-column>
@@ -101,7 +100,7 @@
       </el-table>
       <el-pagination
         class="pagination"
-        page-size="8"
+        :page-size="search.pageSize"
         background
         layout="prev, pager, next, total"
         :total="this.total"
@@ -125,6 +124,7 @@ export default {
         pageNumber: 1
       },
       loading: false,
+      total: 0,
       tableData: [],
       companys: [],
       walletTypes: [

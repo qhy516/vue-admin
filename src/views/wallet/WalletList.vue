@@ -63,7 +63,7 @@
       </el-table>
       <el-pagination
         class="pagination"
-        page-size="8"
+        :page-size="search.pageSize"
         background
         layout="prev, pager, next, total"
         :total="this.total"

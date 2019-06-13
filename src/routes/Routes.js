@@ -5,7 +5,6 @@ import Index from '../views/index/Index.vue';
 import UserList from '../views/user/UserList.vue'
 import WalletList from '../views/wallet/WalletList.vue'
 import WalletLogList from '../views/walletlog/WalletLogList.vue';
-import WalletAsset from '../views/wallet/WalletAsset.vue';
 import FeeList from "../views/fee/FeeList.vue";
 import EntrustList from "../views/entrust/EntrustList.vue";
 import CloseLineList from "../views/closeLine/CloseLineList.vue";
@@ -27,7 +26,7 @@ import CapitalList from "../views/report/capital/CapitalList.vue";
 import HoldList from "../views/report/hold/HoldList.vue";
 import FlatList from "../views/report/flat/FlatList.vue";
 import HangUpList from "../views/report/hangUp/HangUpList.vue";
-
+import RealAuthList from "../views/realAuth/RealAuthList.vue";
 
 let routes = [{
         path: '/login',
@@ -174,6 +173,11 @@ let routes = [{
                 path: '/paymentlist',
                 component: PaymentList,
                 name: '支付方式列表'
+            },
+            {
+                path: '/realauthlist',
+                component: RealAuthList,
+                name: '实名认证列表'
             },
         ]
     },

@@ -16,7 +16,7 @@
           <el-input v-model="detail.phone" placeholder="请设置手机号"></el-input>
         </el-col>
       </el-form-item>
-      <el-form-item label="验证码：" prop="verifyCode" :label-width="formLabelWidth">
+      <!-- <el-form-item label="验证码：" prop="verifyCode" :label-width="formLabelWidth">
         <el-col :span="8">
           <el-input v-model="detail.verifyCode" placeholder="输入验证码"></el-input>
         </el-col>
@@ -29,7 +29,7 @@
             <span v-show="!show" style>{{count}} 秒后重新获取</span>
           </el-button>
         </el-col>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="所属公司：" prop="companyId" :label-width="formLabelWidth">
         <el-col :span="16">
           <el-select class="select" v-model="detail.companyId" placeholder="请选择所在公司">
@@ -65,14 +65,14 @@ export default {
           { required: true, message: "请输入密码", trigger: "blur" }
           //{ validator: validaePass2 }
         ],
-        phone: [
-          { required: true, message: "请输入手机号", trigger: "blur" }
-          //{ validator: validaePass2 }
-        ],
-        verifyCode: [
-          { required: true, message: "请输入验证码", trigger: "blur" }
-          //{ validator: validaePass2 }
-        ],
+        // phone: [
+        //   { required: true, message: "请输入手机号", trigger: "blur" }
+        //   //{ validator: validaePass2 }
+        // ],
+        // verifyCode: [
+        //   { required: true, message: "请输入验证码", trigger: "blur" }
+        //   //{ validator: validaePass2 }
+        // ],
         companyId: [
           { required: true, message: "请选择所在公司", trigger: "blur" }
           //{ validator: validaePass2 }

@@ -73,8 +73,8 @@
         <el-table-column prop="owner" label="自有本金" width="115" align="center"></el-table-column>
       </el-table>
       <el-table :show-header="showHeader" :data="tableSum">
-        <el-table-column class-name="talbleTitle" prop="title" mini-width="100"></el-table-column>
-        <el-table-column prop="result" width="1100">
+        <el-table-column class-name="talbleTitle" prop="title" width="120"></el-table-column>
+        <el-table-column prop="result" mini-width="1100">
           <template slot-scope="scope">
             <el-row>
               <el-col :span="4">总的入金金额：{{scope.row.result.totalRecharge}}</el-col>

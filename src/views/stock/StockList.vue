@@ -15,7 +15,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="股票ID：" label-width="90px">
-              <el-input class="forminput" size="small" v-model="search.stockId" placeholder="用户ID"></el-input>
+              <el-input class="forminput" size="small" v-model="search.stockId" placeholder="股票ID"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">

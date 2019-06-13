@@ -39,7 +39,10 @@ export default {
           name: "用户管理",
           path: "",
           icon: "el-icon-user-solid",
-          childs: [{ id: 21, name: "用户列表", path: "/userlist" }]
+          childs: [
+            { id: 21, name: "用户列表", path: "/userlist" },
+            { id: 22, name: "认证列表", path: "/realauthlist" }
+          ]
         },
         {
           id: 3,

@@ -75,9 +75,9 @@
       </el-row>
       <el-row class="chaozuobut">
         <el-button type="primary" size="small" @click="onSubmit">查询</el-button>
-        <el-button type="warning" size="small" @click="add"></el-button>
-        <el-button type="info" size="small" @click="update"></el-button>
-        <el-button type="danger" size="small" @click="rrole"></el-button>
+        <el-button type="warning" size="small"></el-button>
+        <el-button type="info" size="small"></el-button>
+        <el-button type="danger" size="small"></el-button>
       </el-row>
     </el-card>
     <el-card>
@@ -141,6 +141,7 @@ export default {
         pageNumber: 1,
         pageSize: 8
       },
+      companys:[],
       showHeader: false,
       tableData: [],
       tableSum: [{ title: "", sumFee: "" }],

@@ -1,7 +1,7 @@
 <template>
   <div class="multipleColumn">
     <el-row style="margin-bottom: 20px;">
-      <el-col span="5">
+      <el-col :span="5">
         <el-card>
           <div slot="header" class="clearfix">
             <span>今日成交量</span>
@@ -12,7 +12,7 @@
           </div>
         </el-card>
       </el-col>
-      <el-col span="5" offset="1">
+      <el-col :span="5" :offset="1">
         <el-card>
           <div slot="header" class="clearfix">
             <span>今日成交额</span>
@@ -21,7 +21,7 @@
           <p style="font-size: 14px;padding-top: 10px;">总收入：{{totalSum.totalAmount}}元</p>
         </el-card>
       </el-col>
-      <el-col span="5" offset="1">
+      <el-col :span="5" :offset="1">
         <el-card>
           <div slot="header" class="clearfix">
             <span>今日支出</span>
@@ -30,7 +30,7 @@
           <p style="font-size: 14px;padding-top: 10px;">总支出：12万</p>
         </el-card>
       </el-col>
-      <el-col span="5" offset="1">
+      <el-col :span="5" :offset="1">
         <el-card>
           <div slot="header" class="clearfix">
             <span>今日访客</span>

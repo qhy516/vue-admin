@@ -21,7 +21,6 @@ import echarts from 'echarts'
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
-Vue.use(axios)
 const router = new VueRouter({
   routes
 })
@@ -32,8 +31,8 @@ Vue.prototype.echarts = echarts;
 
 // axios默认配置
 axios.defaults.timeout = 10000; // 超时时间
-axios.defaults.baseURL = "http://localhost:9999"; // 开发环境
-// axios.defaults.baseURL = "http://api.stockcash.net"; //测试环境
+// axios.defaults.baseURL = "http://localhost:9999"; // 开发环境
+axios.defaults.baseURL = "http://api.stockcash.net"; //测试环境
 // axios请求拦截
 axios.interceptors.request.use(
   config => {
